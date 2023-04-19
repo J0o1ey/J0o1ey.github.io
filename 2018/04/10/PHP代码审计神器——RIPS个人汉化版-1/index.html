@@ -15,13 +15,19 @@ RIPS项目的官网为http://rips-scanner.sourceforge.net/和 https://www.ripste
 <h2 id="四、RIPS审计实例"><a href="#四、RIPS审计实例" class="headerlink" title="四、RIPS审计实例"></a>四、RIPS审计实例</h2><p>我们先以笔者多年前刚刚学PHP时写的垃圾程序开一下刀(拿老裤写的，你懂得)<br><img src="https://s2.loli.net/2023/04/19/tkVbpl9LaFjZQUm.png" alt="image"></p>
 <p>扫描后结果如图<br><img src="https://s2.loli.net/2023/04/19/56mHoitakzhPpQ8.png" alt="image"></p>
 <p>可以看到存在XSS、文件读取、PHP代码执行、HTTP header注入等漏洞，我们选择XSS和文件读取漏洞来测试一下RIPS审计的准确性。</p>
-<h3 id="①XSS漏洞处代码如下"><a href="#①XSS漏洞处代码如下" class="headerlink" title="①XSS漏洞处代码如下"></a>①XSS漏洞处代码如下</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">&quot;-&gt;&lt;a href=\&quot;<span class="subst">&#123;$_SERVER[&#x27;PHP_SELF&#x27;]&#125;</span>?path=&quot;</span> . <span class="title function_ invoke__">_encode</span> (<span class="variable">$f</span>[<span class="string">&#x27;..&#x27;</span>]) . <span class="string">&quot;\&quot;&gt;上级目录      &lt;/a&gt; &quot;</span>; </span><br><span class="line"><span class="variable">$f</span> = <span class="title function_ invoke__">_opendir</span> (<span class="title function_ invoke__">_decode</span> (<span class="variable">$_GET</span>[<span class="string">&#x27;path&#x27;</span>]));  <span class="comment">// elseif($_GET == null) else ,</span></span><br><span class="line"><span class="variable">$f</span> = <span class="title function_ invoke__">_opendir</span> (<span class="string">&#x27;xiaojie&#x27;</span>);  <span class="comment">// elseif($_GET == null),</span></span><br><span class="line"><span class="variable">$f</span> = <span class="title function_ invoke__">_opendir</span> (<span class="string">&#x27;xiaojie&#x27;</span>);  <span class="comment">// if($_GET == &#x27;..&#x27;)，</span></span><br></pre></td></tr></table></figure>
-
+<h3 id="①XSS漏洞处代码如下"><a href="#①XSS漏洞处代码如下" class="headerlink" title="①XSS漏洞处代码如下"></a>①XSS漏洞处代码如下</h3><pre><code class="php">echo &quot;-&gt;&lt;a href=\&quot;&#123;$_SERVER[&#39;PHP_SELF&#39;]&#125;?path=&quot; . _encode ($f[&#39;..&#39;]) . &quot;\&quot;&gt;上级目录      &lt;/a&gt; &quot;; 
+$f = _opendir (_decode ($_GET[&#39;path&#39;]));  // elseif($_GET == null) else ,
+$f = _opendir (&#39;xiaojie&#39;);  // elseif($_GET == null),
+$f = _opendir (&#39;xiaojie&#39;);  // if($_GET == &#39;..&#39;)，
+</code></pre>
 <p>可以看到该程序对f这个变量未进行过滤，直接将其输出，因此很可能存在XSS漏洞结合RIPS的漏洞说明可以知道XSS漏洞的成因及POC<br><img src="https://s2.loli.net/2023/04/19/yHn4dgwK9T6Mjir.png" alt="image"></p>
 <p>我们来测试一下<br><img src="https://s2.loli.net/2023/04/19/ol3mVd7GHhz2baj.png" alt="image"></p>
 <p>如图，我们成功地弹窗了。证明RIPS对该程序的XSS审计是很准确的。</p>
-<h3 id="②任意文件读取处代码如下"><a href="#②任意文件读取处代码如下" class="headerlink" title="②任意文件读取处代码如下"></a>②任意文件读取处代码如下</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo echo &quot;-&gt;&lt;a href=\&quot;&#123;$_SERVER[&#x27;PHP_SELF&#x27;]&#125;?path=&quot; . _encode ($f[&#x27;..&#x27;]) . &quot;\&quot;&gt;上级目录      &lt;/a&gt; &quot;; </span><br><span class="line">$f = _opendir (_decode ($_GET[&#x27;path&#x27;]));  // elseif($_GET == null) else ,</span><br><span class="line">$f = _opendir (&#x27;xiaojie&#x27;);  // elseif($_GET == null),</span><br><span class="line">$f = _opendir (&#x27;xiaojie&#x27;);  // if($_GET == &#x27;..&#x27;),</span><br></pre></td></tr></table></figure>
-
+<h3 id="②任意文件读取处代码如下"><a href="#②任意文件读取处代码如下" class="headerlink" title="②任意文件读取处代码如下"></a>②任意文件读取处代码如下</h3><pre><code>echo echo &quot;-&gt;&lt;a href=\&quot;&#123;$_SERVER[&#39;PHP_SELF&#39;]&#125;?path=&quot; . _encode ($f[&#39;..&#39;]) . &quot;\&quot;&gt;上级目录      &lt;/a&gt; &quot;; 
+$f = _opendir (_decode ($_GET[&#39;path&#39;]));  // elseif($_GET == null) else ,
+$f = _opendir (&#39;xiaojie&#39;);  // elseif($_GET == null),
+$f = _opendir (&#39;xiaojie&#39;);  // if($_GET == &#39;..&#39;),
+</code></pre>
 <p>同样的，该程序未对data变量进行任何验证，直接使用file_get_contents读取文件内容<br><img src="https://s2.loli.net/2023/04/19/PsUZuoaTv5iSVJt.png" alt="image"></p>
 <p>我们来读取一个host文件测试一下<br><img src="https://s2.loli.net/2023/04/19/nb7GANlTcWEBmsy.png" alt="image"></p>
 <p>如图，我们成功读取到了host文件的内容</p>
