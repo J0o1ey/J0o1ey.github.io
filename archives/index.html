@@ -5,168 +5,117 @@ var hm = document.createElement("script");
 hm.src = "//hm.baidu.com/hm.js?" + '1da71ad199e154beef984da705235690';
 var s = document.getElementsByTagName("script")[0];
 s.parentNode.insertBefore(hm, s);
-})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">J0o1ey's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>Archives · All</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/04/19/hello-world/">Hello World</a></h2><time class="has-text-grey" datetime="2023-04-19T01:37:20.375Z">2023-04-19</time><p class="is-flex-grow-2 mt-2">Blog迁移到Github纪念日
-</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/04/19/hello-world/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191640774.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2021/05/25/%E4%BB%8EPDO%E4%B8%8B%E7%9A%84%E6%B3%A8%E5%85%A5%E6%80%9D%E8%B7%AF%E5%88%B0%E8%8E%B7%E5%BE%97Git-3000star%E9%A1%B9%E7%9B%AE0day/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191640774.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1"><i class="tag post-item-tag">代码审计</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2021/05/25/%E4%BB%8EPDO%E4%B8%8B%E7%9A%84%E6%B3%A8%E5%85%A5%E6%80%9D%E8%B7%AF%E5%88%B0%E8%8E%B7%E5%BE%97Git-3000star%E9%A1%B9%E7%9B%AE0day/">从PDO下的注入思路到获得Git 3000star项目0day</a></h2><time class="has-text-grey" datetime="2021-05-25T03:59:22.000Z">2021-05-25</time><p class="is-flex-grow-2 mt-2">0x01 PDO简介PDO全名PHP Data Object
-PDO扩展为PHP访问数据库定义了一个轻量级的一致接口。PDO提供了一个数据访问抽象层，这意味着，不管使用哪种数据库，都可以使用相同的函数（方法）来查询和获取数据。
-PHP连接MySQL数据库有三种方式（MySQL、Mysqli、PDO），列表性比较如下：
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">J0o1ey's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>归档 · 全部</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/04/19/hello-world/">Hello World</a></h2><time class="has-text-grey" datetime="2023-04-19T01:37:20.375Z">2023-04-19</time><p class="is-flex-grow-2 mt-2">Blog迁移到Github纪念日
+</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/04/19/hello-world/">更多</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192231615.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/04/02/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%8D%81%E4%BA%8C-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9C%80%E7%BB%88%E8%A2%AB%E5%BF%BD%E7%95%A5%E7%9A%84graphql%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E7%BB%8F%E5%8E%86/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192231615.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><i class="tag post-item-tag">漏洞挖掘</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/04/02/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%8D%81%E4%BA%8C-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9C%80%E7%BB%88%E8%A2%AB%E5%BF%BD%E7%95%A5%E7%9A%84graphql%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E7%BB%8F%E5%8E%86/">重生之我是赏金猎人(十二)-记一次最终被忽略的graphql漏洞挖掘经历</a></h2><time class="has-text-grey" datetime="2023-04-02T13:28:17.000Z">2023-04-02</time><p class="is-flex-grow-2 mt-2">0x00 起因前几日在hackerone上挖掘某高赏金厂商，走了一遍业务点后，偶然发现http history里面有个graphql的接口
+于是一场坐牢之旅开始了
+0x01 前置知识与内省查询不了解graphql的兄弟可以看看如下的图
+通俗易懂地说：Graphql类似于restful的API 开源查询语言，其巧妙的新方法来改善应用程序中客户端和服务器之间的交互，为项目构建和后期维护提供了新思路
 
 
+在实践经验中，发现国内用graphql技术的厂商并不是很多，大部分还是基于restful的，国外比较流行
+在graphql中，是支持“内省查询”这种比较特殊的技术的
+简单来说就是，GraphQL内置了类似于“swagger的”接口文档，你可以通过内省的方法获得这些信息，如graphql中对象定义、接口参数等信息。..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/04/02/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%8D%81%E4%BA%8C-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9C%80%E7%BB%88%E8%A2%AB%E5%BF%BD%E7%95%A5%E7%9A%84graphql%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E7%BB%8F%E5%8E%86/">更多</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192228334.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/03/30/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%8D%81%E4%B8%80-%E4%BB%8E%E5%BF%BD%E7%95%A5%E5%88%B0triage%E5%86%8D%E5%88%B0%E5%A4%B1%E6%9C%9Bbounty%E7%9A%84SSRF%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192228334.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><i class="tag post-item-tag">漏洞挖掘</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/03/30/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%8D%81%E4%B8%80-%E4%BB%8E%E5%BF%BD%E7%95%A5%E5%88%B0triage%E5%86%8D%E5%88%B0%E5%A4%B1%E6%9C%9Bbounty%E7%9A%84SSRF%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/">重生之我是赏金猎人(十一)-从忽略到triage再到失望bounty的SSRF挖掘之旅</a></h2><time class="has-text-grey" datetime="2023-03-30T13:27:56.000Z">2023-03-30</time><p class="is-flex-grow-2 mt-2">0x01 起因前两天和朋友聊天，他发现了一家在hackerone上赏金颇高的Program，并且发现了其中的漏洞
+让老夫羡慕不已
+
+去hackerone看了看厂商信息，漏洞奖励确实是非常诱人的
+而且BugBounty Program Launched on Apr 2015….
+8年hackerone的老厂商了，业务点本来就不多，又被世界各国牛逼的黑客们挖了八年，难度可想而知
+
+但是为了赏金迎难而上，才应该是真正的漏洞猎人该有的风格。
+0x03 走业务点万念俱灰到发现敏感请求从Hackerone的Program scope中搜集了一下业务信息，虽然展开测试
+测试了常规的一些WEB漏洞，IDOR等漏洞，发现完全没有一点机会，Filter和鉴权写的非常过硬，而且用户都是通过uuid类型来传参进行身份鉴权
+首先目..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/03/30/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%8D%81%E4%B8%80-%E4%BB%8E%E5%BF%BD%E7%95%A5%E5%88%B0triage%E5%86%8D%E5%88%B0%E5%A4%B1%E6%9C%9Bbounty%E7%9A%84SSRF%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/">更多</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225239.jpg" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/02/28/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%8D%81-%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%B1%82%E5%B1%82%E7%AA%81%E7%A0%B4%E7%9A%84%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225239.jpg" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F"><i class="tag post-item-tag">内网渗透</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/02/28/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%8D%81-%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%B1%82%E5%B1%82%E7%AA%81%E7%A0%B4%E7%9A%84%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83/">重生之我是赏金猎人(十)-记一次层层突破的攻防演练</a></h2><time class="has-text-grey" datetime="2023-02-28T13:24:24.000Z">2023-02-28</time><p class="is-flex-grow-2 mt-2">0x00 前言本文简单记述了一下本人在某攻防演练过程中一次层层突破的有趣经历
+技术性在攻防实战中虽然一般，但是层层突破的过程比较有意思，并用到了比较多的思路，因此分享给大家
+0x01 SSO账号获取由于目标是某大学，对外开放的服务基本上都是一些静态Web页面，没什么太多利用点
+因此获取一个该大学的SSO账号就显得尤为重要~
+本人使用该大学的域名、以及常见的搜索密码关键词，调用Github的api在Github中定位到了就读该大学的关键用户
+
+该同学安全意识较为薄弱，经常将账号密码硬编码在程序内，这正是我们苦苦寻觅的人才
+
+结合他在其他项目中硬编码的学号，我们成功利用他的学号+密码登陆该大学SSO系统和学生vpn系统
 
 
-Mysqli
-PDO
-MySQL
+本来以为可以进驻内网了，结果发现学生VPN除了访问一些学术资源，啥也干不了
+好在进去SS..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/02/28/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%8D%81-%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%B1%82%E5%B1%82%E7%AA%81%E7%A0%B4%E7%9A%84%E6%94%BB%E9%98%B2%E6%BC%94%E7%BB%83/">更多</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192223925.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2023/02/22/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%B9%9D-%E5%B7%A7%E7%94%A8%E7%9B%AE%E6%A0%87%E5%9F%9F%E5%90%8D%E7%89%B9%E7%82%B9%E6%8C%96%E6%8E%98%E6%9F%90%E6%96%B0%E4%B8%8ASRC%E5%9B%9B%E5%A4%84RCE/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192223925.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><i class="tag post-item-tag">漏洞挖掘</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2023/02/22/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%B9%9D-%E5%B7%A7%E7%94%A8%E7%9B%AE%E6%A0%87%E5%9F%9F%E5%90%8D%E7%89%B9%E7%82%B9%E6%8C%96%E6%8E%98%E6%9F%90%E6%96%B0%E4%B8%8ASRC%E5%9B%9B%E5%A4%84RCE/">重生之我是赏金猎人(九)-巧用目标域名特点挖掘某新上SRC四处RCE</a></h2><time class="has-text-grey" datetime="2023-02-22T13:23:25.000Z">2023-02-22</time><p class="is-flex-grow-2 mt-2">0x02 缘起早上打开微信无聊水群，偶然间发现新上了家SRC
+
+新上的SRC一般都是细皮嫩肉的处子，未经万人骑，得手也更加容易，我们来一探究竟
+0x03 资产搜集到默认秘钥被改 山穷水尽简单用目标的cert信息收集了一下网络空间的资产
+发现了目标不少的域名都采用“短横线命名法”，一般来说大厂用这种命名法便于分辨开发、测试、生产环境还是蛮多的
+
+总结了一下，常见的开发、测试、生产环境域名中常见词如下
+uat
+test
+dev
+pre
+pr
+pro
+...
+
+随后从资产列表中找到了一个看起来像管理api接口的域名进行访问
+
+根据页面回显，结合之前多年的测试经验，推断此处使用了Apache Apisix
+之前复现过Apache Apisix默认秘钥添加恶意路由导致的RCE漏洞，此处直接准备一试
+发现直接寄了，目标..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2023/02/22/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%B9%9D-%E5%B7%A7%E7%94%A8%E7%9B%AE%E6%A0%87%E5%9F%9F%E5%90%8D%E7%89%B9%E7%82%B9%E6%8C%96%E6%8E%98%E6%9F%90%E6%96%B0%E4%B8%8ASRC%E5%9B%9B%E5%A4%84RCE/">更多</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192216563.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2022/12/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%85%AD-%E5%BC%BA%E8%A1%8C%E5%A4%9A%E6%AC%A1FUZZ%E5%8F%91%E7%8E%B0%E6%9F%90%E5%8E%82%E5%95%86SSRF%E5%88%B0redis%E5%AF%86%E7%A0%81%E5%96%B7%E6%B4%92%E6%89%B9%E9%87%8F%E5%8F%8D%E5%BC%B9Shell/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192216563.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><i class="tag post-item-tag">漏洞挖掘</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2022/12/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%85%AD-%E5%BC%BA%E8%A1%8C%E5%A4%9A%E6%AC%A1FUZZ%E5%8F%91%E7%8E%B0%E6%9F%90%E5%8E%82%E5%95%86SSRF%E5%88%B0redis%E5%AF%86%E7%A0%81%E5%96%B7%E6%B4%92%E6%89%B9%E9%87%8F%E5%8F%8D%E5%BC%B9Shell/">重生之我是赏金猎人(六)-强行多次FUZZ发现某厂商SSRF到redis密码喷洒批量反弹Shell</a></h2><time class="has-text-grey" datetime="2022-12-26T13:14:05.000Z">2022-12-26</time><p class="is-flex-grow-2 mt-2">0x01 对目录批量FUZZ，发现一处隐蔽接口挖某大厂已经挖了快两个周了，期间因为公司业务比较繁忙，最近一直没挖。
+但是一直在用ffuf挂着字典对厂商资产进行批量目录扫描，今天上服务器看了下扫描结果，就出货了
+
+接口地址为：https://xxx.xxxx.com/xxxx/start
+我们直接对其进行访问
+
+发现该接口给我们提供了一些可以使用的接口链接
+我们逐个测试拼接接口后，发现一个名为face_xxxx的接口有戏
+0x02 FUZZ传参格式+参数访问接口，提示Method Not Allow，405错误，那么很显然，我们得换POST传参
+
+POST随便传个参过去，发现接口提示”Request error, content-type was unsupported”
+
+很好，继续FUZZ content..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2022/12/26/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%85%AD-%E5%BC%BA%E8%A1%8C%E5%A4%9A%E6%AC%A1FUZZ%E5%8F%91%E7%8E%B0%E6%9F%90%E5%8E%82%E5%95%86SSRF%E5%88%B0redis%E5%AF%86%E7%A0%81%E5%96%B7%E6%B4%92%E6%89%B9%E9%87%8F%E5%8F%8D%E5%BC%B9Shell/">更多</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192220437.jpg" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2022/03/15/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%85%AB-%E6%A2%A6%E4%B8%AD%E7%BB%9D%E6%9D%80%E6%9F%90%E8%84%96%E4%BB%A3%E7%90%86%E5%95%86%E5%90%8E%E5%8F%B0/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192220437.jpg" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><i class="tag post-item-tag">漏洞挖掘</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2022/03/15/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%85%AB-%E6%A2%A6%E4%B8%AD%E7%BB%9D%E6%9D%80%E6%9F%90%E8%84%96%E4%BB%A3%E7%90%86%E5%95%86%E5%90%8E%E5%8F%B0/">重生之我是赏金猎人(八)-梦中绝杀某脖代理商后台</a></h2><time class="has-text-grey" datetime="2022-03-15T12:13:12.000Z">2022-03-15</time><p class="is-flex-grow-2 mt-2">前两天在国企的朋友遇到了一个棘手的靶标，听说之前没人能从外网打点进去，只能靠万里防火墙取证
+我一听来了兴趣，在梦中臆造了一个靶场进行渗透，并且该梦境已获得相关授权
+还请各位看官请勿对号入座，如有雷同，纯属巧合
+0x01 钓鱼打点官网发现了客服联系方式
+
+通过修改 shellcode特征的CS + 免杀加载器，直接做出免杀🐴。
+改后缀名为非exe(懂的都懂)，直接用话术钓鱼客服(现在客服都聪明了，直接exe是肯定钓不到的)，获得其桌面记事本
+记事本中翻出来了后台地址，但是并没有账号密码(有也没有用，因为有Google验证码)
+http://xxxxx/xxxxx-admin/
+
+0x02 FUZZ得到Spring Actuator泄露，并分析信息FUZZ了一下，出了二级目录Spring Actuator的泄..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2022/03/15/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%85%AB-%E6%A2%A6%E4%B8%AD%E7%BB%9D%E6%9D%80%E6%9F%90%E8%84%96%E4%BB%A3%E7%90%86%E5%95%86%E5%90%8E%E5%8F%B0/">更多</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192217586.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2022/03/10/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%B8%83-%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%8E%E9%A3%9E%E5%A1%94%E6%B5%81%E9%87%8F%E6%A3%80%E6%B5%8B%E5%AF%B9%E6%8A%97%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192217586.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><i class="tag post-item-tag">漏洞挖掘</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2022/03/10/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%B8%83-%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%8E%E9%A3%9E%E5%A1%94%E6%B5%81%E9%87%8F%E6%A3%80%E6%B5%8B%E5%AF%B9%E6%8A%97%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">重生之我是赏金猎人(七)-记一次与飞塔流量检测对抗的文件上传</a></h2><time class="has-text-grey" datetime="2022-03-10T10:13:39.000Z">2022-03-10</time><p class="is-flex-grow-2 mt-2">0x01 起因某项目靶标，是一个人员管理系统，通过webpack暴露的接口
+我们成功找到了一个未鉴权的密码修改接口，通过fuzz
+我们获取到了该接口的参数username与password，并成功修改了admin账号密码进入后台
+在一个任意上传的后台功能点，我们遇到了飞塔WAF+流量检测设备，于是便有了本文
+0x02 摸清检测规则众所周知，飞塔公司的WAF+流量检测设备还是比较牛逼的，我直接尝试上传一个免杀webshell，毫无疑问直接GG了
+
+经过测试，上传无害内容1111但文件名为XXX.aspx也会被拦截
+发现飞塔对form表单的文件名和文件内容都有检测，我们必须得把这俩检测都安排掉才能成功上传
+下面简述一下对抗思路
+0x03 文件名检测——根据.NET上传匹配文件名特性绕WAF(骗).NET中常用c..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2022/03/10/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%B8%83-%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%B8%8E%E9%A3%9E%E5%A1%94%E6%B5%81%E9%87%8F%E6%A3%80%E6%B5%8B%E5%AF%B9%E6%8A%97%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/">更多</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192214230.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2021/12/22/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%BA%94-%E5%A4%9A%E6%89%8B%E6%B3%95%E7%BB%95%E8%BF%87WAF%E6%8C%96%E6%8E%98%E6%9F%90%E7%9F%A5%E5%90%8D%E5%8E%82%E5%95%86XSS/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192214230.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><i class="tag post-item-tag">漏洞挖掘</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2021/12/22/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%BA%94-%E5%A4%9A%E6%89%8B%E6%B3%95%E7%BB%95%E8%BF%87WAF%E6%8C%96%E6%8E%98%E6%9F%90%E7%9F%A5%E5%90%8D%E5%8E%82%E5%95%86XSS/">重生之我是赏金猎人(五)-多手法绕过WAF挖掘某知名厂商XSS</a></h2><time class="has-text-grey" datetime="2021-12-22T13:13:52.000Z">2021-12-22</time><p class="is-flex-grow-2 mt-2">0x01 前奏最近在测试某知名安全厂商的过程中，发现其一处重要业务的子域竟出现了难得一见的自研WAF，如此一来勾起了我的兴趣~
+
+仔细研究该业务点后，发现某处传参，会直接将传参内容写入JS中，大大的危险
+
+于是与WAF的一次交锋便从此刻开始~
+0x02 平静的闭合与常规操作由上图的输出位置可知，无WAF情况下，我们只需要通过
+’)]
+
+三个符号来闭合前半部分JS，再用&amp;#x2F;&amp;#x2F;注释后方JS，再直接eval执行JS代码即可
+构造Payload
+%27)];eval(alert(&amp;#39;xss&amp;#39;))//
 
 
+由于eval，alert，括号等太敏感~毫无疑问，直接被WAF秒了
+那只能用经验与思路来逐渐替换掉这些敏感的函数关键词了~
+0x03 多手法组合绕过WAF解决eval首先解决的是ev..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/22/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%BA%94-%E5%A4%9A%E6%89%8B%E6%B3%95%E7%BB%95%E8%BF%87WAF%E6%8C%96%E6%8E%98%E6%9F%90%E7%9F%A5%E5%90%8D%E5%8E%82%E5%95%86XSS/">更多</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142157.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2021/12/21/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%9B%9B-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9C%89%E8%B6%A3%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AFRCE-%E6%9C%8D%E5%8A%A1%E7%AB%AFXXE%E6%8C%96%E6%8E%98/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142157.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><i class="tag post-item-tag">漏洞挖掘</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2021/12/21/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%9B%9B-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9C%89%E8%B6%A3%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AFRCE-%E6%9C%8D%E5%8A%A1%E7%AB%AFXXE%E6%8C%96%E6%8E%98/">重生之我是赏金猎人(四)-记一次有趣的客户端RCE+服务端XXE挖掘</a></h2><time class="has-text-grey" datetime="2021-12-21T13:13:21.000Z">2021-12-21</time><p class="is-flex-grow-2 mt-2">0x01 起因朋友给某甲方做渗透测试，奈何甲方是某知名保险，系统太耐艹，半天不出货
+兄弟喊我来一块来看，于是有了本文
+0x02 客户端RCE一处朋友把靶标发给我看了下，除了两个下载链接啥也没有
 
-引入的PHP版本
-5.0
-5.0
-3.0之前
+链接下载下来的东西如图，看了下目录里面还有JRE，那么很显然，这客户端exe就是个JAVA启动命令执行套壳
 
+随后打开program文件夹，逆了一下里面的Jar
+full_path前面定义为用户更新时输入的路径
 
-PHP5.x是否包含
-是
-是
-是
-
-
-服务端prepare语句的支持情况
-是
-是
-否
+那么很简单了full_path可控，诱导用户安装更新时路径出输入注入命令即可
+D:\software  &amp;amp;&amp;amp; ping hacker&amp;#39;s IP
 
 
-客户端prepare语句的支持情况
-否
-是
-否
-
-
-存储过程支持情况
-是
-是
-否
-
-
-多语句执行支持情况
-是
-大多数
-否
-
-
-如需在php中使用pdo扩展，需要在php.ini文件中进行配置
-
-0x02 PD..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/05/25/%E4%BB%8EPDO%E4%B8%8B%E7%9A%84%E6%B3%A8%E5%85%A5%E6%80%9D%E8%B7%AF%E5%88%B0%E8%8E%B7%E5%BE%97Git-3000star%E9%A1%B9%E7%9B%AE0day/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192050736.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2021/04/12/2021%E5%B9%B4-hw%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%B8%89-NimShellcodeLoader/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192050736.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90"><i class="tag post-item-tag">样本分析</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2021/04/12/2021%E5%B9%B4-hw%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%B8%89-NimShellcodeLoader/">2021年 hw红队样本分析(三) - NimShellcodeLoader</a></h2><time class="has-text-grey" datetime="2021-04-12T12:45:04.000Z">2021-04-12</time><p class="is-flex-grow-2 mt-2">0x01 样本概况Name:主机邮件安全检查工具
-ico使用的是360的图标
-
-在Virustotal网站上，样本报毒1引擎，基本上绕过了全部国产杀毒，免杀效果较好
-
-
-
-0x02 样本分析对该样本进行反编译处理，
-根据程序中各地址字符串信息可以推断
-该样本使用了较为小众的语言nim作为shellcode loader
-
-因为该样本使用的是nim语言，导致反编译出现有较大困难
-
-获取到了部分远程加载地址
-http://47.105.76.103:8023/log.txthttp://47.105.76.103:8081/cmhttp://47.105.76.103:8081/lbJD根据字符串信息+动态调试结果推断该恶意样本执行流程如下
-
-下载http://47.105.76.103:8023/log.tx..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/04/12/2021%E5%B9%B4-hw%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%B8%89-NimShellcodeLoader/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192049043.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2021/04/12/2021%E5%B9%B4-HW%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%BA%8C-C-ShellcodeLoader/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192049043.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90"><i class="tag post-item-tag">样本分析</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2021/04/12/2021%E5%B9%B4-HW%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%BA%8C-C-ShellcodeLoader/">2021年-HW红队样本分析(二) - C++ ShellcodeLoader</a></h2><time class="has-text-grey" datetime="2021-04-12T12:44:40.000Z">2021-04-12</time><p class="is-flex-grow-2 mt-2">0x01 样本概况Name:国家xx局安全升级文档.docs.exe
-ico为word的，很显然在利用已知扩展名隐藏的特性在钓鱼
-在Virustotal网站上，样本报毒9引擎，基本上绕过了全部国产杀毒，免杀效果相对较好
-
-其样本为C2远控样本，回链地址为39.107.95.197
-
-其回连IP已经被标记为恶意C2 IP
-
-行为特征如下
-
-0x02 样本分析对该样本进行反编译处理，该恶意样本执行流程如下创建互斥体
-检查用户名
-检查当前环境是否为虚拟机
-
-检查系统语言
-
-从http://39.107.95.197:8888/update64.bin下载文件并复制到内存
-
-
-virtualAlloc开辟内存后
-将刚刚下载的bin文件的shellcode加载到开辟的内存中并且执行
-
-winhex查看bin文件
-其s..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/04/12/2021%E5%B9%B4-HW%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%BA%8C-C-ShellcodeLoader/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192048898.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2021/04/09/2021%E5%B9%B4-HW%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%B8%80-PythonShellcodeLoader/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192048898.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90"><i class="tag post-item-tag">样本分析</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2021/04/09/2021%E5%B9%B4-HW%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%B8%80-PythonShellcodeLoader/">2021年 HW红队样本分析(一)-PythonShellcodeLoader</a></h2><time class="has-text-grey" datetime="2021-04-09T12:16:26.000Z">2021-04-09</time><p class="is-flex-grow-2 mt-2">0x01 邮件原文与样本hw期间内部邮箱网关收到了钓鱼邮件
-邮件原文如下
-
-
-解压后得到样本
-财险内部旅游套餐方案.pdf.exe
-样本为大小为5.88M,HASH如下
-MD5
-5bc32973b43593207626c0588fc6247e
-SHA-1
-551414cb283a56cf55817c720c2efee0144ea2ed
-SHA-256
-d12e852eeefa87e75c7876fb53947b979bfbf880eb825eb58b9fe7f0132809ad
-VT报毒 14&amp;#x2F;69，免杀效果尚可
-
-
-通过Yara规则检测，为典型的Cobaltstrike x64 https beacon载荷
-
-基于程序体积和逆向后获取到的函数判断，该恶意样本为Python编写的shellcode..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/04/09/2021%E5%B9%B4-HW%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%B8%80-PythonShellcodeLoader/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://i.loli.net/2020/11/13/9tK5Iyozsp4rPq7.jpg" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2020/11/25/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A5%87%E5%A6%99%E7%9A%84%E5%AD%A6%E6%A0%A1%E6%B8%97%E9%80%8F%E4%B9%8B%E6%97%85/"><img class="post-cover-img js-img-fadeIn" src="https://i.loli.net/2020/11/13/9tK5Iyozsp4rPq7.jpg" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><i class="tag post-item-tag">漏洞挖掘</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2020/11/25/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A5%87%E5%A6%99%E7%9A%84%E5%AD%A6%E6%A0%A1%E6%B8%97%E9%80%8F%E4%B9%8B%E6%97%85/">记一次奇妙的学校渗透之旅</a></h2><time class="has-text-grey" datetime="2020-11-25T08:12:35.000Z">2020-11-25</time><p class="is-flex-grow-2 mt-2">0x01 起因由于疫情问题，学校的易班APP新增了打卡系统，每天需要进行晨检，午检打卡，忘记的话就是上千字检讨
-本人对于这种“形式主义”深感不满，于是准备操作一番
-
-非常幸运，校级“易班”系统的负责人就是我们团队的指导老师，
-在取得他的授权后，便开始了对于易班系统的曲折而又精彩的渗透
-在此鸣谢M78sec的所有成员
-0x02踩点基本的信息搜集咱们就不多说了
-根据老师口述，该域名下部署有多项功能系统（包括负载均衡，直播，表白墙，打卡签到系统，心理测试系统等等），因此不同系统使用了不同的多台服务器
-看样不能一劳永逸，需要各个系统、服务器逐个击破，然后摸入核心系统中
-首先打开“易班”系统的首页是这个样子
-
-不难看出，开发者使用了TP框架，在简单地测试了各种TP 注入，RCE的payload后均以失败告终，看样安全..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2020/11/25/%E8%AE%B0%E4%B8%80%E6%AC%A1%E5%A5%87%E5%A6%99%E7%9A%84%E5%AD%A6%E6%A0%A1%E6%B8%97%E9%80%8F%E4%B9%8B%E6%97%85/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191618365.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2020/08/25/BS%E6%9E%B6%E6%9E%84%E5%9C%A8%E7%BA%BFShellcode%E5%85%8D%E6%9D%80%E5%B9%B3%E5%8F%B0/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191618365.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91"><i class="tag post-item-tag">安全开发</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2020/08/25/BS%E6%9E%B6%E6%9E%84%E5%9C%A8%E7%BA%BFShellcode%E5%85%8D%E6%9D%80%E5%B9%B3%E5%8F%B0/">BS架构在线Shellcode免杀平台</a></h2><time class="has-text-grey" datetime="2020-08-25T08:15:57.000Z">2020-08-25</time><p class="is-flex-grow-2 mt-2">和几位dalao忙了几天
-利用PHP+Python+GO三门语言写了一个在线shellcode免杀平台
-
-在CS中生成X64的c shellcode，按照平台指定格式提交，即可一键生成免杀后门（过所有国产）
-本人郑重承诺，不含任何后门，欢迎各位reverse确认！为防止滥用，就不开源出来了
-我也不会收集大佬们的c2 ip，今年hw我并不参加
-
-本在线平台仅限攻防演练、授权渗透测试中使用，严禁用于非法用途（居心叵测之人自重，本系统带有溯源机制）
-使用注册码进行账号注册后，会自动获取最近两次登录的ip并进行绑定，其他ip无法登录，使用注册码前请谨慎考虑
-平台链接联系博主获取
-现免费赠送5个邀请码，如果没领到联系我vx:J0o1ey997，定期会发邀请码
-HXGzVWWxzWCZ63hL3XyHHbbBL5X1Q..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2020/08/25/BS%E6%9E%B6%E6%9E%84%E5%9C%A8%E7%BA%BFShellcode%E5%85%8D%E6%9D%80%E5%B9%B3%E5%8F%B0/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://s1.ax1x.com/2020/03/25/8xGpDg.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2020/03/25/Eyoucms-SSTI%E6%BC%8F%E6%B4%9E%E5%AE%A1%E8%AE%A1/"><img class="post-cover-img js-img-fadeIn" src="https://s1.ax1x.com/2020/03/25/8xGpDg.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1"><i class="tag post-item-tag">代码审计</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2020/03/25/Eyoucms-SSTI%E6%BC%8F%E6%B4%9E%E5%AE%A1%E8%AE%A1/">Eyoucms SSTI漏洞审计</a></h2><time class="has-text-grey" datetime="2020-03-25T14:13:30.000Z">2020-03-25</time><p class="is-flex-grow-2 mt-2">0x01 审计起因由于在先知查看文章的时候无意看到了EyouCMS漏洞复现文章，于是产生了审计之心
-0x02 EyouCMS简介
-EyouCms是基于TP5.0框架为核心开发的免费+开源的企业内容管理系统，专注企业建站用户需求。提供海量各行业模板，降低中小企业网站建设、网络营销成本，致力于打造用户舒适的建站体验。这是一套安全、简洁、免费的流行CMS，包含完整后台管理、前台展示，直接下载安装即可使用。 演示网址：[http://demo.eyoucms.com][2] 官方网站：[http://www.eyoucms.com][3]
-
-0x03 代码分析进入/application/api/controller/Ajax.php中的**function get_tag_memberlist**方法
-publi..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2020/03/25/Eyoucms-SSTI%E6%BC%8F%E6%B4%9E%E5%AE%A1%E8%AE%A1/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191702649.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2020/03/21/%E8%87%AA%E5%88%B6CS-4-0-%E5%8E%BB%E6%9A%97%E6%A1%A9-VNC%E4%BF%AE%E5%A4%8D-x64Payload%E4%BF%AE%E5%A4%8D-%E7%BB%88%E6%9E%81%E6%B1%89%E5%8C%96%E7%89%88%E6%9C%AC/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191702649.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91"><i class="tag post-item-tag">安全开发</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2020/03/21/%E8%87%AA%E5%88%B6CS-4-0-%E5%8E%BB%E6%9A%97%E6%A1%A9-VNC%E4%BF%AE%E5%A4%8D-x64Payload%E4%BF%AE%E5%A4%8D-%E7%BB%88%E6%9E%81%E6%B1%89%E5%8C%96%E7%89%88%E6%9C%AC/">自制CS 4.0 去暗桩/VNC修复/x64Payload修复/终极汉化版本</a></h2><time class="has-text-grey" datetime="2020-03-21T09:02:15.000Z">2020-03-21</time><p class="is-flex-grow-2 mt-2">两天过去了，我知道，大家都在等CS完美破解版
-从CS4.0出了以后，足足折腾两天了。暗桩,x64 payload,vnc支持等等问题层出不穷
-而且官方也没有编写windows下启动teamserver的批处理文件
-自己动手，丰衣足食！
-参考先知一位师傅和国外某牛的修复方法，CS4.0去暗桩，windows teamserver支持，vnc修复，x64 payload修复，汉化支持 终极版本今天发布！！
-如果不需要汉化的话，在start.bat中去掉agent即可
-站着干嘛，进来白嫖啊
-链接：https://pan.baidu.com/s/11rJVvgKviN82sVOrpHoSlg提取码：z44m
-
-</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2020/03/21/%E8%87%AA%E5%88%B6CS-4-0-%E5%8E%BB%E6%9A%97%E6%A1%A9-VNC%E4%BF%AE%E5%A4%8D-x64Payload%E4%BF%AE%E5%A4%8D-%E7%BB%88%E6%9E%81%E6%B1%89%E5%8C%96%E7%89%88%E6%9C%AC/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191657535.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2019/12/19/%E5%AE%9E%E7%8E%B0%E8%B5%84%E4%BA%A7%E6%90%9C%E9%9B%86QQ%E6%9C%BA%E5%99%A8%E4%BA%BA/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191657535.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91"><i class="tag post-item-tag">安全开发</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2019/12/19/%E5%AE%9E%E7%8E%B0%E8%B5%84%E4%BA%A7%E6%90%9C%E9%9B%86QQ%E6%9C%BA%E5%99%A8%E4%BA%BA/">实现资产搜集QQ机器人</a></h2><time class="has-text-grey" datetime="2019-12-19T08:56:07.000Z">2019-12-19</time><p class="is-flex-grow-2 mt-2">0x01命令及功能演示之前为一个论坛写了个文章机器人，最近加上了子域名查询和资产搜集功能（用的自己的付费接口）
-加上这两个功能希望可以方便大家渗透测试和学习使用
-原本希望写一个QQ渗透机器人编写系列的。。但是介于比较合规性上比较敏感和最近缺乏时间，日后再动工
-
-本机器人QQ号为3609079527，申请添加好友后，机器人自动同意，自动同意加群
-欢迎各位群主&amp;#x2F;群管&amp;#x2F;安全爱好者拉入群中使用（只回复群里）
-拉入群中后，输入命令“帮助”即可查看使用方法
-目前支持的命令有
-最新文章
-最热文章
-搜索 xxx
-资产查询 xxx
-子域名查询 xxx
-0x02演示#资产查询#
-子域名查询#
-其他功能在此不过多演示，请各位自行体验
-</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2019/12/19/%E5%AE%9E%E7%8E%B0%E8%B5%84%E4%BA%A7%E6%90%9C%E9%9B%86QQ%E6%9C%BA%E5%99%A8%E4%BA%BA/">Read more</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="iconfont icon-next has-text-grey"></i></a></section></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>Archives</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">April 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a><span class="archive-list-count">1</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
+0x03 发现Webservice Soap接口光这一个水来的客户端RCE肯定是不够的，接下来继续挖掘服务端
+看了看没别的功能点，我就..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/12/21/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%9B%9B-%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%9C%89%E8%B6%A3%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AFRCE-%E6%9C%8D%E5%8A%A1%E7%AB%AFXXE%E6%8C%96%E6%8E%98/">更多</a></section></article><section class="paginator is-flex is-justify-content-flex-end is-flex-wrap-wrap mt-5"><span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="iconfont icon-next has-text-grey"></i></a></section></section><aside class="column is-hidden-mobile is-4-tablet is-3-widescreen"><div style="position: sticky; top: 50px;"><main class="aside-card-container archives-widget is-in-archive-page"><h3>归档</h3><section><ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">April 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">March 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">December 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">March 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">November 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">May 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">April 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">November 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">September 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">August 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">15</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a><span class="archive-list-count">1</span></li></ul></section></main></div></aside></div></article><script>$claudia.fadeInImage(null, $claudia.blurBackdropImg)
 
 window.addEventListener('resize', $claudia.throttle(function () {
     var images = document.querySelectorAll('.js-img-fadeIn')

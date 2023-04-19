@@ -1,0 +1,64 @@
+<!DOCTYPE html><html class="appearance-auto" lang="cn"><head><meta charset="UTF-8"><title>重生之我是赏金猎人(四)-记一次有趣的客户端RCE+服务端XXE挖掘</title><meta name="description" content="J0o1ey Blog | Hack for Sec and Good"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '1da71ad199e154beef984da705235690';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="0x01 起因朋友给某甲方做渗透测试，奈何甲方是某知名保险，系统太耐艹，半天不出货
+兄弟喊我来一块来看，于是有了本文
+0x02 客户端RCE一处朋友把靶标发给我看了下，除了两个下载链接啥也没有
+
+链接下载下来的东西如图，看了下目录里面还有JRE，那么很显然，这客户端exe就是个JAVA启动命令执行套壳
+
+随后打开program文件夹，逆了一下里面的Jar
+full_path前面定义为用户更新时输入的路径
+
+那么很简单了full_path可控，诱导用户安装更新时路径出输入注入命令即可
+D:\software  &amp;amp;&amp;amp; ping hacker&amp;#39;s IP
+
+
+0x03 发现Webservice Soap接口光这一个水来的客户端RCE肯定是不够的，接下来继续挖掘服务端
+看了看没别的功能点，我就.."><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">J0o1ey's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">重生之我是赏金猎人(四)-记一次有趣的客户端RCE+服务端XXE挖掘</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-%E8%B5%B7%E5%9B%A0"><span class="toc-text">0x01 起因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-%E5%AE%A2%E6%88%B7%E7%AB%AFRCE%E4%B8%80%E5%A4%84"><span class="toc-text">0x02 客户端RCE一处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-%E5%8F%91%E7%8E%B0Webservice-Soap%E6%8E%A5%E5%8F%A3"><span class="toc-text">0x03 发现Webservice Soap接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04%E5%AF%BC%E5%85%A5SoapUI"><span class="toc-text">0x04导入SoapUI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-XXE%E6%8C%96%E6%8E%98"><span class="toc-text">0x05 XXE挖掘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-%E6%80%BB%E7%BB%93"><span class="toc-text">0x06 总结</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><i class="tag post-item-tag">漏洞挖掘</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">重生之我是赏金猎人(四)-记一次有趣的客户端RCE+服务端XXE挖掘</h1><time class="has-text-grey" datetime="2021-12-21T13:13:21.000Z">2021-12-21</time><article class="mt-2 post-content"><h2 id="0x01-起因"><a href="#0x01-起因" class="headerlink" title="0x01 起因"></a>0x01 起因</h2><p>朋友给某甲方做渗透测试，奈何甲方是某知名保险，系统太耐艹，半天不出货</p>
+<p>兄弟喊我来一块来看，于是有了本文</p>
+<h2 id="0x02-客户端RCE一处"><a href="#0x02-客户端RCE一处" class="headerlink" title="0x02 客户端RCE一处"></a>0x02 客户端RCE一处</h2><p>朋友把靶标发给我看了下，除了两个下载链接啥也没有</p>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/8hKoUZP1etXN2Si.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142157.png" alt="img"></a></p>
+<p>链接下载下来的东西如图，看了下目录里面还有JRE，那么很显然，这客户端exe就是个JAVA启动命令执行套壳</p>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/e1DOnsSfbil6HZN.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142831.png" alt="img"></a></p>
+<p>随后打开program文件夹，逆了一下里面的Jar</p>
+<p>full_path前面定义为用户更新时输入的路径</p>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/GowTki89rcO3UMK.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142221.png" alt="img"></a></p>
+<p>那么很简单了full_path可控，诱导用户安装更新时路径出输入注入命令即可</p>
+<pre><code class="vbnet">D:\software  &amp;&amp; ping hacker&#39;s IP
+</code></pre>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/2hW4KzEODkfYypd.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192145028.png" alt="img"></a></p>
+<h2 id="0x03-发现Webservice-Soap接口"><a href="#0x03-发现Webservice-Soap接口" class="headerlink" title="0x03 发现Webservice Soap接口"></a>0x03 发现Webservice Soap接口</h2><p>光这一个水来的客户端RCE肯定是不够的，接下来继续挖掘服务端</p>
+<p>看了看没别的功能点，我就简单FUZZ了一下这个系统三级目录</p>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/4Vlu8vpcxKQJh16.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142659.png" alt="img"></a></p>
+<p>最后FUZZ出来了一个webservice接口</p>
+<p>http:&#x2F;&#x2F;****.xxxxxx.cn&#x2F;xxxx&#x2F;service</p>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/y9ZMhRDnfScHjLw.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142315.png" alt="img"></a></p>
+<p>拼接出其wsdl接口</p>
+<p>http:&#x2F;&#x2F;****.xxxxxx.cn&#x2F;xxxx&#x2F;service&#x2F;BusinessService?wsdl</p>
+<p>但导入SoapUI或AWVS的调试模块进行调试时却发现其导入失败</p>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/NI9qyGLPTciphbn.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142655.png" alt="img"></a></p>
+<p>仔细看了下WSDL返回的信息。。。妈的WSDL Import Location和Soap Address Location都是内网域名</p>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/F3ijQ4PEH95ksD2.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142373.png" alt="img"></a></p>
+<p>不过幸运的是，该系统的外网域名拼接路径后也可以访问到这个WSDL接口</p>
+<p>但是自动化的Soap接口调试工具是“看见什么就import什么”，这可让人犯了难</p>
+<h2 id="0x04导入SoapUI"><a href="#0x04导入SoapUI" class="headerlink" title="0x04导入SoapUI"></a>0x04导入SoapUI</h2><p>思考了一会，突然想起来BurpSuite可以把RequestBody和ResponseBody的值进行替换，hhh，那我们就有办法导入了</p>
+<p>在Burpsuite的Porxy Option中增加Match&amp;Replace规则</p>
+<p>将WSDL Import Location和Soap Address Location处对应的内网域名都替换为外网域名</p>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/whrn98TC7kbJZ6Q.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142262.png" alt="img"></a></p>
+<p>随后在SoapUI中设置Proxy</p>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/iEwOydTQM4tYVGh.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142058.png" alt="img"></a></p>
+<p>打开代理，再次添加WSDL，ResponseBody的内网域名成功被替换，WSDL导入成功~</p>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/IvfRJ9Y5doPpLWy.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142963.png" alt="img"></a></p>
+<h2 id="0x05-XXE挖掘"><a href="#0x05-XXE挖掘" class="headerlink" title="0x05 XXE挖掘"></a>0x05 XXE挖掘</h2><p>导入接口后，发现有参数为dataXML，心中暗喜XXE估计是送上门了</p>
+<p><a target="_blank" rel="noopener" href="https://s2.loli.net/2021/12/21/utaD2qUYXIfZ968.png"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142408.png" alt="img"></a></p>
+<p>直接BurpSuite中利用XXE OOB测试</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142925.jpg" alt="image-20220306152639003"></p>
+<p>OOB成功，XXE到手，收摊~</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192142372.jpg" alt="image-20220604155438953"></p>
+<h2 id="0x06-总结"><a href="#0x06-总结" class="headerlink" title="0x06 总结"></a>0x06 总结</h2><p>坚持一下，守得云开见月明，漏洞就在眼前~</p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2021/12/22/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%BA%94-%E5%A4%9A%E6%89%8B%E6%B3%95%E7%BB%95%E8%BF%87WAF%E6%8C%96%E6%8E%98%E6%9F%90%E7%9F%A5%E5%90%8D%E5%8E%82%E5%95%86XSS/" title="重生之我是赏金猎人(五)-多手法绕过WAF挖掘某知名厂商XSS"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: 重生之我是赏金猎人(五)-多手法绕过WAF挖掘某知名厂商XSS</span></a><a class="button is-default" href="/2021/11/19/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%B8%89-%E6%97%A0%E8%84%91%E6%8C%96%E6%8E%98%E6%9F%90SRC-getshell/" title="重生之我是赏金猎人(三)-无脑挖掘某SRC getshell"><span class="has-text-weight-semibold">下一页: 重生之我是赏金猎人(三)-无脑挖掘某SRC getshell</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="j0o1ey/j0o1ey.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com//"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/j0o1ey"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> J0o1ey 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

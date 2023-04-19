@@ -1,0 +1,128 @@
+<!DOCTYPE html><html class="appearance-auto" lang="cn"><head><meta charset="UTF-8"><title>重生之我是赏金猎人(十)-记一次层层突破的攻防演练</title><meta name="description" content="J0o1ey Blog | Hack for Sec and Good"><meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, initial-scale=1"><!-- Google Analytics --><!-- End Google Analytics -->
+<!-- Baidu Analytics --><script>var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "//hm.baidu.com/hm.js?" + '1da71ad199e154beef984da705235690';
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/post.css"><link rel="stylesheet" href="/style/themes/highlight-theme-light.css"><link rel="stylesheet" href="/style/common/jquery.fancybox.min.css"><script src="/js/highlight.pack.js"></script><meta name="description" content="0x00 前言本文简单记述了一下本人在某攻防演练过程中一次层层突破的有趣经历
+技术性在攻防实战中虽然一般，但是层层突破的过程比较有意思，并用到了比较多的思路，因此分享给大家
+0x01 SSO账号获取由于目标是某大学，对外开放的服务基本上都是一些静态Web页面，没什么太多利用点
+因此获取一个该大学的SSO账号就显得尤为重要~
+本人使用该大学的域名、以及常见的搜索密码关键词，调用Github的api在Github中定位到了就读该大学的关键用户
+
+该同学安全意识较为薄弱，经常将账号密码硬编码在程序内，这正是我们苦苦寻觅的人才
+
+结合他在其他项目中硬编码的学号，我们成功利用他的学号+密码登陆该大学SSO系统和学生vpn系统
+
+
+本来以为可以进驻内网了，结果发现学生VPN除了访问一些学术资源，啥也干不了
+好在进去SS.."><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">J0o1ey's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><div class="is-full-height" id="postTopic"><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">重生之我是赏金猎人(十)-记一次层层突破的攻防演练</p><p class="is-full-height is-flex-shrink-0 is-flex is-align-items-center is-justify-content-center">点击返回顶部</p></div></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">首页</a></h3><h3 class="is-inline-block"><a href="/about">关于</a></h3><h3 class="is-inline-block"><a href="/archives">归档</a></h3></header><main><main class="container is-max-widescreen content section post-page pt-4 px-4"><div class="columns is-flex-desktop is-justify-content-center is-flex-direction-row-reverse"><div class="column is-3 is-hidden-mobile"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x00-%E5%89%8D%E8%A8%80"><span class="toc-text">0x00 前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-SSO%E8%B4%A6%E5%8F%B7%E8%8E%B7%E5%8F%96"><span class="toc-text">0x01 SSO账号获取</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-%E6%9F%90%E7%B3%BB%E7%BB%9F%E6%8E%A5%E5%8F%A3%E5%88%A9%E7%94%A8%E6%B5%8B%E8%AF%95tips%E8%8E%B7%E5%8F%96%E5%A4%A7%E9%87%8F%E4%BF%A1%E6%81%AF"><span class="toc-text">0x02 某系统接口利用测试tips获取大量信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x03-%E8%BF%9B%E9%A9%BBDMZ%E5%8C%BA%E5%B9%B6%E8%8E%B7%E5%8F%96%E5%86%85%E7%BD%91%E8%B7%B3%E6%9D%BF"><span class="toc-text">0x03 进驻DMZ区并获取内网跳板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x04-%E8%A2%AB%E8%B8%A2%E5%87%BA%E5%86%85%E7%BD%91%E4%B8%8E%E6%94%B6%E4%B9%B0%E5%AD%A6%E6%A0%A1%E5%86%85%E9%AC%BC"><span class="toc-text">0x04 被踢出内网与收买学校内鬼</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x05-%E8%BF%91%E6%BA%90%E6%B8%97%E9%80%8F%E7%9B%B4%E6%8D%A3%E9%BB%84%E9%BE%99"><span class="toc-text">0x05 近源渗透直捣黄龙</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x06-%E6%9C%AB%E8%A8%80"><span class="toc-text">0x06 末言</span></a></li></ol></div><div class="column is-9"><header class="my-4"><a href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F"><i class="tag post-item-tag">内网渗透</i></a></header><h1 class="mt-0 mb-1 is-family-serif" id="postTitle">重生之我是赏金猎人(十)-记一次层层突破的攻防演练</h1><time class="has-text-grey" datetime="2023-02-28T13:24:24.000Z">2023-02-28</time><article class="mt-2 post-content"><h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><p>本文简单记述了一下本人在某攻防演练过程中一次层层突破的有趣经历</p>
+<p>技术性在攻防实战中虽然一般，但是层层突破的过程比较有意思，并用到了比较多的思路，因此分享给大家</p>
+<h2 id="0x01-SSO账号获取"><a href="#0x01-SSO账号获取" class="headerlink" title="0x01 SSO账号获取"></a>0x01 SSO账号获取</h2><p>由于目标是某大学，对外开放的服务基本上都是一些静态Web页面，没什么太多利用点</p>
+<p>因此获取一个该大学的SSO账号就显得尤为重要~</p>
+<p>本人使用该大学的域名、以及常见的搜索密码关键词，调用Github的api在Github中定位到了就读该大学的关键用户</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225239.jpg" alt="image-20220618100944824"></p>
+<p>该同学安全意识较为薄弱，经常将账号密码硬编码在程序内，这正是我们苦苦寻觅的人才</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225602.jpg" alt="image-20220618100922784"></p>
+<p>结合他在其他项目中硬编码的学号，我们成功利用他的学号+密码登陆该大学SSO系统和学生vpn系统</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225007.jpg" alt="image-20220618101339023"></p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225367.jpg" alt="image-20220618103125720"></p>
+<p>本来以为可以进驻内网了，结果发现学生VPN除了访问一些学术资源，啥也干不了</p>
+<p>好在进去SSO了，那么后面接近靶标之路就会更加轻松，现在自然要把着力点放在SSO能访问到的系统漏洞挖掘上</p>
+<h2 id="0x02-某系统接口利用测试tips获取大量信息"><a href="#0x02-某系统接口利用测试tips获取大量信息" class="headerlink" title="0x02 某系统接口利用测试tips获取大量信息"></a>0x02 某系统接口利用测试tips获取大量信息</h2><p>走了一遍SSO能访问的系统</p>
+<p>发现某项目申请处，可以搜索学校其他同学的信息</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225911.jpg" alt="image-20220618101937376"></p>
+<p>如图，接口在流量中是这样表现的</p>
+<p>我们利用一个测试tips，将其中的关键键置空，或者使用通配符*，发现可以成功返回全校三万多名学生的信息</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225483.jpg" alt="image-20220618102208679"></p>
+<p>凭此成果，仅能得一点可怜的分数，还得继续来撸</p>
+<p>我继续在系统重翻找接口，终于发现了一个可以搜索学校老师的接口</p>
+<p>同样的使用刚刚的tips，在关键的键处置空键值或使用*，这次运气很好，返回的信息中，甚至出现了所有老师的工号和md5加密的密码</p>
+<p>甚至包括sso管理员的密码。。。</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225031.jpg" alt="image-20220618102809575"></p>
+<p>解了一下admin的密码，非常遗憾，解不开，不然游戏就直接结束了~</p>
+<p>但我们现在掌握了大量老师的工号，密码(包括负责运维的老师)，那么我们后面进驻内网的工作就会顺利很多</p>
+<h2 id="0x03-进驻DMZ区并获取内网跳板"><a href="#0x03-进驻DMZ区并获取内网跳板" class="headerlink" title="0x03 进驻DMZ区并获取内网跳板"></a>0x03 进驻DMZ区并获取内网跳板</h2><p>我们做了很长时间的信息搜集，找到了该学校开放在外网给运维人员使用的DMZ区VPN</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225449.jpg" alt="image-20220618103620549"></p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225800.jpg" alt="image-20220618105819143"></p>
+<p>我们直接用刚刚获取到负责运维的老师的账号密码登录，发现一直不好使…</p>
+<p>结果试了一下，发现密码竟然和工号是一致的….真是无语…</p>
+<p>随后就成功接入了该学校DMZ区VPN</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225274.jpg" alt="image-20220618103938618"></p>
+<p>进入DMZ区后，我们简单做了一下弱口令扫描探测，发现了一台SqlServer的弱口令</p>
+<p>直接通过恢复执行xp_cmdshell，发现还是管理员权限</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225706.jpg" alt="image-20220618104248653"></p>
+<p>但是列进程的时候发现了万恶的某60</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225084.jpg" alt="image-20220618104339199"></p>
+<p>试了试自己之前的certutil下载文件绕过方法，因为之前交了360SRC，已经被修复了，TMD直接被拦</p>
+<p>但是仔细一想，SqlServer中是存在LOL bin的，可以实现白利用执行powershell</p>
+<pre><code class="powershell">LOL bin
+
+C:\Program files (x86)\Microsoft SQL Server\xxx\Tools\Binn\SQLPS.exe
+C:\Program files (x86)\Microsoft SQL Server\xxx\Tools\Binn\SQLPS.exe whoami
+</code></pre>
+<p>通过此姿势，成功上线CS</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225462.jpg" alt="image-20220618104803788"></p>
+<p>如此一来，访问内网核心区的跳板就有了~</p>
+<h2 id="0x04-被踢出内网与收买学校内鬼"><a href="#0x04-被踢出内网与收买学校内鬼" class="headerlink" title="0x04 被踢出内网与收买学校内鬼"></a>0x04 被踢出内网与收买学校内鬼</h2><p>还没等开心一会，突然发现CS的进程已经被下掉了，并且DMZ区账号也被踢下线并改密码了</p>
+<p>估计是目标机有主机安全设备，检测到了进程中的CS内存特征或流量特征。。。</p>
+<p>线索全断，让人陷入了沉思，不过转念一想，内网代理套代理也是卡的要死，还不如想想办法如何直接获取内网核心区的访问权限</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225018.gif" alt="摸脑袋表情包"></p>
+<p>我们于是在咸鱼上开始寻找猎物，发现了就读于该大学的某学生</p>
+<p>该学生咸鱼上挂的具体内容忘记截图了，大体意思是”<strong>我是xxx大学的学生，可以为大家提供xxx大学的有关帮助，考研，生活等等等，视难度收费10-50</strong>“</p>
+<p>我们直接加他联系方式，给他转了50。</p>
+<p>话术如下</p>
+<pre><code class="text">我：你好你好，我是xx大学的学生，现在在外面，回不去学校，想用下你的电脑，访问学校内的教务系统，给您50元答谢
+
+对方：哦哦可以，你看看怎么整
+
+我：你下个向日葵，然后把主机号和密码发给我就好
+
+对方：okok
+</code></pre>
+<p>就这样，我们连上了这个二傻子的向日葵</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225633.jpg" alt="image-20220618111131625"></p>
+<p>然后直接用他的cmd，把权限给到CS，做好权限维持</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225987.jpg" alt="image-20220618110447005"></p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225324.jpg" alt="image-20220618110346861"></p>
+<p>把隧道传出来，发现学生的PC竟然可以直接访问核心区。。。随后在内网又开始了扫描，撸了一些乱七八糟的系统，比如海康某设备的RCE，web系统的注入，网关等等东西，但都没法反弹shell。。</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225427.jpg" alt="image-20220618111536680"></p>
+<p>当时又发现了一个SSH弱口令，可给我们高兴坏了，二话不说连过去</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225715.jpg" alt="image-20220618111452695"></p>
+<p>当看到这一幕的时候，一身冷汗，因为非常清楚，自己踩到内网蜜罐了，又要寄了。。。</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225087.jpg" alt="image-20220618105955678"></p>
+<p>果然不出20分钟，那位同学就发来了微信</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225460.jpg" alt="image-20220618110022087"></p>
+<p>气煞我也，后面想继续用金钱收买，道了歉，说自己一不小心传错软件了，又给他转了20块钱，想再用一阵</p>
+<p>可谁知</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225867.jpg" alt="image-20220618112218432"></p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225166.jpg" alt="image-20220618112348348"></p>
+<p>气煞我也，竟然不讲武德</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225560.jpg" alt="img"></p>
+<h2 id="0x05-近源渗透直捣黄龙"><a href="#0x05-近源渗透直捣黄龙" class="headerlink" title="0x05 近源渗透直捣黄龙"></a>0x05 近源渗透直捣黄龙</h2><p>眼看着所有能通向内网核心区的路径全寄了，我们只能想办法出奇制胜，摇人去近源渗透</p>
+<p>叫甲方派了了个人，混进学校内的图书馆，用之前获取到的学生sso账号接入校园网</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225817.jpg" alt="image-20220618112848638"></p>
+<p>如此一来，我们就有了稳定且不易察觉的内网通道😂</p>
+<p>接下来就是常规操作了，漏扫核心网段，发现了docker api未授权和vcenter的RCE</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225232.jpg" alt="image-20220619004532359"></p>
+<p>可控制数十个镜像</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225771.jpg" alt="image-20220619001950533"></p>
+<p>核心区VCenter存在CVE-2021-21972漏洞，可直接写入Webshell</p>
+<p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192225132.jpg" alt="image-20220619002143315"></p>
+<p>随后可利用Vcenter的shell权限实现cookie伪造</p>
+<p>使用脚本</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/horizon3ai/vcenter_saml_login/blob/main/vcenter_saml_login.py">https://github.com/horizon3ai/vcenter_saml_login/blob/main/vcenter_saml_login.py</a></p>
+<pre><code class="shell">python3 vcenter_saml_login.py -t Vcenter内网ip -p data.mdb
+</code></pre>
+<pre><code>data.mdb路径
+
+windows：C:/ProgramData/VMware/vCenterServer/data/vmdird/data.mdb
+
+linux：/storage/db/vmware-vmdir/data.mdb
+</code></pre>
+<p>使用生成的cookie进驻VCenter</p>
+<p>分数刷满，润了~</p>
+<h2 id="0x06-末言"><a href="#0x06-末言" class="headerlink" title="0x06 末言"></a>0x06 末言</h2><p>本文没有过多的技术性东西，主要是跟大家分享一下自己打攻防被”围追堵截“的经典案例，给奋斗在攻防一线的兄弟加油鼓劲</p>
+<p>权限掉了，被踢出内网，莫要灰心气馁，<strong>见招拆招，才是攻防的乐趣所在</strong></p>
+</article><section class="jump-container is-flex is-justify-content-space-between my-6"><!-- em is empty placeholder--><a class="button is-default" href="/2023/03/30/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E5%8D%81%E4%B8%80-%E4%BB%8E%E5%BF%BD%E7%95%A5%E5%88%B0triage%E5%86%8D%E5%88%B0%E5%A4%B1%E6%9C%9Bbounty%E7%9A%84SSRF%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/" title="重生之我是赏金猎人(十一)-从忽略到triage再到失望bounty的SSRF挖掘之旅"><i class="iconfont icon-prev mr-2 has-text-grey"></i><span class="has-text-weight-semibold">上一页: 重生之我是赏金猎人(十一)-从忽略到triage再到失望bounty的SSRF挖掘之旅</span></a><a class="button is-default" href="/2023/02/22/%E9%87%8D%E7%94%9F%E4%B9%8B%E6%88%91%E6%98%AF%E8%B5%8F%E9%87%91%E7%8C%8E%E4%BA%BA-%E4%B9%9D-%E5%B7%A7%E7%94%A8%E7%9B%AE%E6%A0%87%E5%9F%9F%E5%90%8D%E7%89%B9%E7%82%B9%E6%8C%96%E6%8E%98%E6%9F%90%E6%96%B0%E4%B8%8ASRC%E5%9B%9B%E5%A4%84RCE/" title="重生之我是赏金猎人(九)-巧用目标域名特点挖掘某新上SRC四处RCE"><span class="has-text-weight-semibold">下一页: 重生之我是赏金猎人(九)-巧用目标域名特点挖掘某新上SRC四处RCE</span><i class="iconfont icon-next ml-2 has-text-grey"></i></a></section><article class="mt-6 comment-container"><script async repo="j0o1ey/j0o1ey.github.io" src="https://utteranc.es/client.js" issue-term="pathname" theme="preferred-color-scheme"></script></article></div></div></main></main><footer class="is-flex is-flex-direction-column is-align-items-center is-flex-shrink-0 is-family-serif"><section class="sns-container"><a title="twitter" target="_blank" rel="noopener nofollow" href="//twitter.com//"><i class="iconfont icon-twitter"></i></a><!-- Github--><a title="github" target="_blank" rel="noopener nofollow" href="//github.com/j0o1ey"><i class="iconfont icon-github"></i></a><!-- Ins--><a title="instagram" target="_blank" rel="noopener nofollow" href="//www.instagram.com//"><i class="iconfont icon-ins"></i></a><!-- RSS--><!-- 知乎--><!-- 领英--><!-- 脸书--><a title="facebook" target="_blank" rel="noopener nofollow" href="//www.facebook.com//"><i class="iconfont icon-tian7_facebook"></i></a></section><p><span>Copyright ©</span><span> J0o1ey 2023</span></p><div class="is-flex is-justify-content-center is-flex-wrap-wrap"><p>Powered by Hexo &verbar;&nbsp;</p><p class="is-flex is-justify-content-center"><a title="Hexo theme author" target="_blank" rel="noopener" href="//github.com/haojen">Theme by Haojen&nbsp;</a></p><div style="margin-top: 2px"><a class="github-button" title="github-button" target="_blank" rel="noopener" href="https://github.com/haojen/hexo-theme-Claudia" data-color-scheme="no-preference: light; light: light; dark: dark;" data-show-count="true"></a></div></div><div><span></span></div></footer><script async defer src="https://buttons.github.io/buttons.js"></script><script src="/js/jquery-3.6.1.min.js"></script><script src="/js/jquery-fancybox.min.js"></script><script src="/js/img_zoom.js"></script><script src="/js/post.js"></script></body></html>
