@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>实现资产搜集QQ机器人</title>
+      <link href="/2023/04/19/%E5%AE%9E%E7%8E%B0%E8%B5%84%E4%BA%A7%E6%90%9C%E9%9B%86QQ%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
+      <url>/2023/04/19/%E5%AE%9E%E7%8E%B0%E8%B5%84%E4%BA%A7%E6%90%9C%E9%9B%86QQ%E6%9C%BA%E5%99%A8%E4%BA%BA/</url>
+      
+        <content type="html"><![CDATA[<h2 id="0x001命令及功能演示"><a href="#0x001命令及功能演示" class="headerlink" title="0x001命令及功能演示#"></a>0x001命令及功能演示<a href="https://www.secquan.org/Share/1070486#0x001%E5%91%BD%E4%BB%A4%E5%8F%8A%E5%8A%9F%E8%83%BD%E6%BC%94%E7%A4%BA">#</a></h2><p>之前为一个论坛写了个文章机器人，最近加上了子域名查询和资产搜集功能（用的自己的付费接口）</p><p>加上这两个功能希望可以方便大家渗透测试和学习使用</p><p>原本希望写一个QQ渗透机器人编写系列的。。但是介于比较合规性上比较敏感和最近缺乏时间，日后再动工</p><p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191657535.png" alt="image-20230419165737517"></p><p>本机器人QQ号为3609079527，申请添加好友后，机器人自动同意，自动同意加群</p><p>欢迎各位群主&#x2F;群管&#x2F;安全爱好者拉入群中使用（只回复群里）</p><p>拉入群中后，输入命令“帮助”即可查看使用方法<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191658516.png" alt="image-20230419165849492"></p><p>目前支持的命令有</p><p>最新文章</p><p>最热文章</p><p>搜索 xxx</p><p>资产查询 xxx</p><p>子域名查询 xxx</p><h2 id="0x002演示"><a href="#0x002演示" class="headerlink" title="0x002演示#"></a>0x002演示<a href="https://www.secquan.org/Share/1070486#0x002%E6%BC%94%E7%A4%BA">#</a></h2><h3 id="资产查询"><a href="#资产查询" class="headerlink" title="资产查询#"></a>资产查询<a href="https://www.secquan.org/Share/1070486#%E8%B5%84%E4%BA%A7%E6%9F%A5%E8%AF%A2">#</a></h3><p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191658590.png" alt="image-20230419165759873"></p><h3 id="子域名查询"><a href="#子域名查询" class="headerlink" title="子域名查询#"></a>子域名查询<a href="https://www.secquan.org/Share/1070486#%E5%AD%90%E5%9F%9F%E5%90%8D%E6%9F%A5%E8%AF%A2">#</a></h3><p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191658767.png" alt="image-20230419165817747"></p><p>其他功能在此不过多演示，请各位自行体验</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 安全开发 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2023/04/19/hello-world/"/>
       <url>/2023/04/19/hello-world/</url>
