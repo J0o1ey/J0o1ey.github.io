@@ -5,58 +5,7 @@ var hm = document.createElement("script");
 hm.src = "//hm.baidu.com/hm.js?" + '1da71ad199e154beef984da705235690';
 var s = document.getElementsByTagName("script")[0];
 s.parentNode.insertBefore(hm, s);
-})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">J0o1ey's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>Archives · 2021</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191640774.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2021/05/25/%E4%BB%8EPDO%E4%B8%8B%E7%9A%84%E6%B3%A8%E5%85%A5%E6%80%9D%E8%B7%AF%E5%88%B0%E8%8E%B7%E5%BE%97Git-3000star%E9%A1%B9%E7%9B%AE0day/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191640774.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><header><a href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1"><i class="tag post-item-tag">代码审计</i></a></header><h2 class="mt-4 mb-0 is-family-serif"><a href="/2021/05/25/%E4%BB%8EPDO%E4%B8%8B%E7%9A%84%E6%B3%A8%E5%85%A5%E6%80%9D%E8%B7%AF%E5%88%B0%E8%8E%B7%E5%BE%97Git-3000star%E9%A1%B9%E7%9B%AE0day/">从PDO下的注入思路到获得Git 3000star项目0day</a></h2><time class="has-text-grey" datetime="2021-05-25T03:59:22.000Z">2021-05-25</time><p class="is-flex-grow-2 mt-2">0x01 PDO简介PDO全名PHP Data Object
-PDO扩展为PHP访问数据库定义了一个轻量级的一致接口。PDO提供了一个数据访问抽象层，这意味着，不管使用哪种数据库，都可以使用相同的函数（方法）来查询和获取数据。
-PHP连接MySQL数据库有三种方式（MySQL、Mysqli、PDO），列表性比较如下：
-
-
-
-
-Mysqli
-PDO
-MySQL
-
-
-
-引入的PHP版本
-5.0
-5.0
-3.0之前
-
-
-PHP5.x是否包含
-是
-是
-是
-
-
-服务端prepare语句的支持情况
-是
-是
-否
-
-
-客户端prepare语句的支持情况
-否
-是
-否
-
-
-存储过程支持情况
-是
-是
-否
-
-
-多语句执行支持情况
-是
-大多数
-否
-
-
-如需在php中使用pdo扩展，需要在php.ini文件中进行配置
-
-0x02 PD..</p><a class="button is-default mt-2 has-text-weight-semibold" href="/2021/05/25/%E4%BB%8EPDO%E4%B8%8B%E7%9A%84%E6%B3%A8%E5%85%A5%E6%80%9D%E8%B7%AF%E5%88%B0%E8%8E%B7%E5%BE%97Git-3000star%E9%A1%B9%E7%9B%AE0day/">Read more</a></section></article><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192050736.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2021/04/12/2021%E5%B9%B4-hw%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%B8%89-NimShellcodeLoader/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192050736.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2021/04/12/2021%E5%B9%B4-hw%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%B8%89-NimShellcodeLoader/">2021年 hw红队样本分析(三) - NimShellcodeLoader</a></h2><time class="has-text-grey" datetime="2021-04-12T12:45:04.000Z">2021-04-12</time><p class="is-flex-grow-2 mt-2">0x01 样本概况Name:主机邮件安全检查工具
+})();</script><!-- End Baidu Analytics --><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/style/common/bulma.css"><link rel="stylesheet" href="/style/base.css"><link rel="stylesheet" href="/style/common/helper.css"><script src="/js/common.js"></script><link rel="stylesheet" href="/style/widget-post-list.css"><meta name="generator" content="Hexo 6.3.0"></head><body class="is-flex is-flex-direction-column"><header class="header-widget is-flex-shrink-0 is-hidden-mobile"><div class="container is-fullhd is-flex is-justify-content-space-between is-align-items-center is-full-height"><section class="is-hidden-mobile is-flex-shrink-0"><h2><a href="/">J0o1ey's blog</a></h2></section><h3 class="is-hidden-mobile is-family-serif is-full-height is-flex is-align-items-center is-flex-shrink-0"><span>Archives · 2021</span></h3><aside class="is-flex-shrink-0"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></aside></div></header><header class="is-flex header-widget is-flex-shrink-0 is-align-items-center is-justify-content-center is-hidden-tablet"><h3 class="is-inline-block"><a href="/">Home</a></h3><h3 class="is-inline-block"><a href="/about">About</a></h3><h3 class="is-inline-block"><a href="/archives">Archives</a></h3></header><main><article class="post-container is-flex is-justify-content-center section container is-max-widescreen pt-4 px-2"><div class="columns is-variable is-1-tablet is-3-desktop-only is-2-widescreen is-full-width"><section class="column"><article class="post-item-card"><header class="is-relative is-flex"><div class="post-cover-backdrop is-hidden"><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192050736.png" alt="loading.."></div><a class="post-cover-link has-text-centered skeleton" href="/2021/04/12/2021%E5%B9%B4-hw%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%B8%89-NimShellcodeLoader/"><img class="post-cover-img js-img-fadeIn" src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304192050736.png" alt="loading.." data-backdrop="true"></a></header><section class="content post-card-content p-4 pb-5"><h2 class="mt-4 mb-0 is-family-serif"><a href="/2021/04/12/2021%E5%B9%B4-hw%E7%BA%A2%E9%98%9F%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90-%E4%B8%89-NimShellcodeLoader/">2021年 hw红队样本分析(三) - NimShellcodeLoader</a></h2><time class="has-text-grey" datetime="2021-04-12T12:45:04.000Z">2021-04-12</time><p class="is-flex-grow-2 mt-2">0x01 样本概况Name:主机邮件安全检查工具
 ico使用的是360的图标
 
 在Virustotal网站上，样本报毒1引擎，基本上绕过了全部国产杀毒，免杀效果较好
