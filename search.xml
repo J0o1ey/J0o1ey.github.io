@@ -4,31 +4,6 @@
   
     
     <entry>
-      <title>Cobaltstrike系列教程(四)菜单栏与视图</title>
-      <link href="/2023/06/10/Cobaltstrike%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B-%E5%9B%9B-%E8%8F%9C%E5%8D%95%E6%A0%8F%E4%B8%8E%E8%A7%86%E5%9B%BE/"/>
-      <url>/2023/06/10/Cobaltstrike%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B-%E5%9B%9B-%E8%8F%9C%E5%8D%95%E6%A0%8F%E4%B8%8E%E8%A7%86%E5%9B%BE/</url>
-      
-        <content type="html"><![CDATA[<h2 id="0x01-Cobaltstrike菜单栏"><a href="#0x01-Cobaltstrike菜单栏" class="headerlink" title="0x01-Cobaltstrike菜单栏"></a>0x01-Cobaltstrike菜单栏</h2><p><a href="https://imgchr.com/i/eKTD29"><img src="https://s2.ax1x.com/2019/07/27/eKTD29.png" alt="eKTD29.png"></a></p><pre><code>1.新建连接2.断开当前连接3.监听器4.改变视图为Pivot Graph(可以显示各个目标的关系)5.改变视图为Session Table(会话列表)6.改变视图为Target Table(目标列表)7.查看凭据信息8.查看文件下载9.查看键盘记录10.查看屏幕截图11.生成无状态Beacon后门12.java自签名程序攻击13.生成office宏后门14.生成脚本通过web传递(利用powershell，bitsadmin，regsvr32生成会话)15.在Cobalt Strike的web服务上托管一个文件(提供一个文件下载)16.管理Cobalt Strike上运行的web服务17.帮助18.关于</code></pre><h2 id="0x02-Cobaltstrike视图"><a href="#0x02-Cobaltstrike视图" class="headerlink" title="0x02-Cobaltstrike视图"></a>0x02-Cobaltstrike视图</h2><h3 id="①菜单4-Pivot-Graph-拓扑图"><a href="#①菜单4-Pivot-Graph-拓扑图" class="headerlink" title="①菜单4:Pivot Graph(拓扑图)"></a>①菜单4:Pivot Graph(拓扑图)</h3><p>如图所示，该视图可以很清楚地查看各主机之间的关系，该视图在大规模内网渗透和APT中非常直观和实用。<br><a href="https://imgchr.com/i/eKTcb6"><img src="https://s2.ax1x.com/2019/07/27/eKTcb6.png" alt="eKTcb6.png"></a></p><h3 id="②菜单5-Session-Table-会话列表"><a href="#②菜单5-Session-Table-会话列表" class="headerlink" title="②菜单5:Session Table(会话列表)"></a>②菜单5:Session Table(会话列表)</h3><p>这个视图是我们渗透测试中最为常用的，他主要显示的是当前所有的会话，会话的权限，会话运行在目标机上的pid等等<br>选择会话右键，会出现很多功能</p><pre><code>进入beacon执行        dump hashes 获取hash        Elevate  提权        Golden Ticket 生成黄金票据注入当前会话        MAke token  凭证转换        Run Mimikatz 运行 Mimikatz         Spawn As 用其他用户生成Cobalt Strike侦听器目标        Browser Pivot 劫持目标浏览器进程        Desktop(VNC)  桌面交互        File Browser  文件浏览器        Net View 命令Net View        Port scan 端口扫描        Process list 进程列表        Screenshot 截图中转        SOCKS Server 代理服务        Listener  反向端口转发        Deploy VPN 部署VPNSpawn  新的通讯模式并生成会话Session 会话管理，删除，心跳时间，退出，备注</code></pre><p><a href="https://imgchr.com/i/eKTyK1"><img src="https://s2.ax1x.com/2019/07/27/eKTyK1.png" alt="eKTyK1.png"></a></p><h3 id="③菜单6-Target-Table-目标列表"><a href="#③菜单6-Target-Table-目标列表" class="headerlink" title="③菜单6:Target Table(目标列表)"></a>③菜单6:Target Table(目标列表)</h3><p>  本处显示的是在beacon中执行主机存活扫描&#x2F;端口扫描后，探测出的存活的主机。<br><a href="https://imgchr.com/i/eKT6Dx"><img src="https://s2.ax1x.com/2019/07/27/eKT6Dx.png" alt="eKT6Dx.png"></a></p><p>  在本视图中，选择目标右键<br><a href="https://imgchr.com/i/eKTrvR"><img src="https://s2.ax1x.com/2019/07/27/eKTrvR.png" alt="eKTrvR.png"></a></p><p>   如图，cs可以使用多种方式登录到目标主机（进行内网横向移动），如果多台服务器使用了同样的凭据，我们就可以使用此功能进行hash传递，拿下多台服务器权限<br>当然，其也带有端口扫描功能，可以扫描指定主机的端口。</p><p><a href="https://imgchr.com/i/eKT2VK"><img src="https://s2.ax1x.com/2019/07/27/eKT2VK.png" alt="eKT2VK.png"></a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> blog </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 安全工具 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Hello World</title>
       <link href="/2023/04/19/hello-world/"/>
       <url>/2023/04/19/hello-world/</url>
@@ -285,6 +260,31 @@
       <url>/2019/06/11/Cobaltstrike%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B-%E4%BA%94-%E5%87%AD%E6%8D%AE%E5%AF%BC%E5%87%BA/</url>
       
         <content type="html"><![CDATA[<h2 id="0x01-凭据导出"><a href="#0x01-凭据导出" class="headerlink" title="0x01-凭据导出"></a>0x01-凭据导出</h2><p>凭据说的通俗易懂一点，可以理解为目标机的账号，密码<br>凭据导出是渗透测试中即为重要的步骤，导出目标机凭据后，我们可以使用凭据实现横向移动（利用hash传递，smb&#x2F;rdp爆破等等手法）来扩大我们的战果</p><h2 id="0x02-Hashdump导出hash"><a href="#0x02-Hashdump导出hash" class="headerlink" title="0x02-Hashdump导出hash"></a>0x02-Hashdump导出hash</h2><p><a href="https://imgchr.com/i/eMeKdP"><img src="https://s2.ax1x.com/2019/07/27/eMeKdP.png" alt="eMeKdP.png"></a><br>选择beacon会话右键,选择执行–&gt;转储Hash，或在beacon中输入hashdump<br>如图beacon会话框输出了目标机的用户名和密码hash值<br>以本次导出的一个凭据为例</p><pre><code>admin:1022:aad3b435b51404eeaad3b435b51404ee:f4bb18c1165a89248f9e853b269a8995:::</code></pre><p>f4bb18c1165a89248f9e853b269a8995为admin用户的NTLM Hash<br>我们可以去cmd5等平台破解该NTLM密文，如图，破解后明文为Abc123<br><a href="https://imgchr.com/i/eMe1JS"><img src="https://s2.ax1x.com/2019/07/27/eMe1JS.png" alt="eMe1JS.png"></a></p><h2 id="0x003-Mimikatz导出凭据"><a href="#0x003-Mimikatz导出凭据" class="headerlink" title="0x003-Mimikatz导出凭据"></a>0x003-Mimikatz导出凭据</h2><p><a href="https://imgchr.com/i/eMeuZt"><img src="https://s2.ax1x.com/2019/07/27/eMeuZt.png" alt="eMeuZt.png"></a></p><p>选择执行–&gt;Run Mimikatz，或在beacon中执行logonpasswords命令当会话为管理员权限时，才能dump成功，如果权限很低，请先提权~我日后也会写</p><p>如图，成功导出了登陆过3389的某用户的明文密码</p><p><a href="https://imgchr.com/i/eMedoV"><img src="https://s2.ax1x.com/2019/07/27/eMedoV.png" alt="eMedoV.png"></a></p><h2 id="0x04–凭据存储"><a href="#0x04–凭据存储" class="headerlink" title="0x04–凭据存储"></a>0x04–凭据存储</h2><p>如图，点击按钮，即可查看之前dump过的凭据信息<br><a href="https://imgchr.com/i/eMe8zQ"><img src="https://s2.ax1x.com/2019/07/27/eMe8zQ.png" alt="eMe8zQ.png"></a><br>在进行横向移动时也可以使用之前dump过的凭据<br><a href="https://imgchr.com/i/eMe3Rg"><img src="https://s2.ax1x.com/2019/07/27/eMe3Rg.png" alt="eMe3Rg.png"></a></p><h2 id="0x05-大福利"><a href="#0x05-大福利" class="headerlink" title="0x05-大福利"></a>0x05-大福利</h2><p>什么?你的mimikatz被杀了？加载不出来？？<br><a href="https://imgchr.com/i/eMeMIf"><img src="https://s2.ax1x.com/2019/07/27/eMeMIf.png" alt="eMeMIf.png"></a><br>今天为博客朋友们免费送上自改免杀版mimikatz，支持Windows10，编译时默认功能为logonpasswords</p><p><a href="https://imgchr.com/i/eMeJMj"><img src="https://s2.ax1x.com/2019/07/27/eMeJMj.png" alt="eMeJMj.png"></a><br>链接：<a href="https://pan.baidu.com/s/183BozwOrNNKurWOB-Gw74A">https://pan.baidu.com/s/183BozwOrNNKurWOB-Gw74A</a><br>提取码：3k84</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> blog </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 安全工具 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Cobaltstrike系列教程(四)菜单栏与视图</title>
+      <link href="/2019/06/10/Cobaltstrike%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B-%E5%9B%9B-%E8%8F%9C%E5%8D%95%E6%A0%8F%E4%B8%8E%E8%A7%86%E5%9B%BE/"/>
+      <url>/2019/06/10/Cobaltstrike%E7%B3%BB%E5%88%97%E6%95%99%E7%A8%8B-%E5%9B%9B-%E8%8F%9C%E5%8D%95%E6%A0%8F%E4%B8%8E%E8%A7%86%E5%9B%BE/</url>
+      
+        <content type="html"><![CDATA[<h2 id="0x01-Cobaltstrike菜单栏"><a href="#0x01-Cobaltstrike菜单栏" class="headerlink" title="0x01-Cobaltstrike菜单栏"></a>0x01-Cobaltstrike菜单栏</h2><p><a href="https://imgchr.com/i/eKTD29"><img src="https://s2.ax1x.com/2019/07/27/eKTD29.png" alt="eKTD29.png"></a></p><pre><code>1.新建连接2.断开当前连接3.监听器4.改变视图为Pivot Graph(可以显示各个目标的关系)5.改变视图为Session Table(会话列表)6.改变视图为Target Table(目标列表)7.查看凭据信息8.查看文件下载9.查看键盘记录10.查看屏幕截图11.生成无状态Beacon后门12.java自签名程序攻击13.生成office宏后门14.生成脚本通过web传递(利用powershell，bitsadmin，regsvr32生成会话)15.在Cobalt Strike的web服务上托管一个文件(提供一个文件下载)16.管理Cobalt Strike上运行的web服务17.帮助18.关于</code></pre><h2 id="0x02-Cobaltstrike视图"><a href="#0x02-Cobaltstrike视图" class="headerlink" title="0x02-Cobaltstrike视图"></a>0x02-Cobaltstrike视图</h2><h3 id="①菜单4-Pivot-Graph-拓扑图"><a href="#①菜单4-Pivot-Graph-拓扑图" class="headerlink" title="①菜单4:Pivot Graph(拓扑图)"></a>①菜单4:Pivot Graph(拓扑图)</h3><p>如图所示，该视图可以很清楚地查看各主机之间的关系，该视图在大规模内网渗透和APT中非常直观和实用。<br><a href="https://imgchr.com/i/eKTcb6"><img src="https://s2.ax1x.com/2019/07/27/eKTcb6.png" alt="eKTcb6.png"></a></p><h3 id="②菜单5-Session-Table-会话列表"><a href="#②菜单5-Session-Table-会话列表" class="headerlink" title="②菜单5:Session Table(会话列表)"></a>②菜单5:Session Table(会话列表)</h3><p>这个视图是我们渗透测试中最为常用的，他主要显示的是当前所有的会话，会话的权限，会话运行在目标机上的pid等等<br>选择会话右键，会出现很多功能</p><pre><code>进入beacon执行        dump hashes 获取hash        Elevate  提权        Golden Ticket 生成黄金票据注入当前会话        MAke token  凭证转换        Run Mimikatz 运行 Mimikatz         Spawn As 用其他用户生成Cobalt Strike侦听器目标        Browser Pivot 劫持目标浏览器进程        Desktop(VNC)  桌面交互        File Browser  文件浏览器        Net View 命令Net View        Port scan 端口扫描        Process list 进程列表        Screenshot 截图中转        SOCKS Server 代理服务        Listener  反向端口转发        Deploy VPN 部署VPNSpawn  新的通讯模式并生成会话Session 会话管理，删除，心跳时间，退出，备注</code></pre><p><a href="https://imgchr.com/i/eKTyK1"><img src="https://s2.ax1x.com/2019/07/27/eKTyK1.png" alt="eKTyK1.png"></a></p><h3 id="③菜单6-Target-Table-目标列表"><a href="#③菜单6-Target-Table-目标列表" class="headerlink" title="③菜单6:Target Table(目标列表)"></a>③菜单6:Target Table(目标列表)</h3><p>  本处显示的是在beacon中执行主机存活扫描&#x2F;端口扫描后，探测出的存活的主机。<br><a href="https://imgchr.com/i/eKT6Dx"><img src="https://s2.ax1x.com/2019/07/27/eKT6Dx.png" alt="eKT6Dx.png"></a></p><p>  在本视图中，选择目标右键<br><a href="https://imgchr.com/i/eKTrvR"><img src="https://s2.ax1x.com/2019/07/27/eKTrvR.png" alt="eKTrvR.png"></a></p><p>   如图，cs可以使用多种方式登录到目标主机（进行内网横向移动），如果多台服务器使用了同样的凭据，我们就可以使用此功能进行hash传递，拿下多台服务器权限<br>当然，其也带有端口扫描功能，可以扫描指定主机的端口。</p><p><a href="https://imgchr.com/i/eKT2VK"><img src="https://s2.ax1x.com/2019/07/27/eKT2VK.png" alt="eKT2VK.png"></a></p>]]></content>
       
       
       <categories>
