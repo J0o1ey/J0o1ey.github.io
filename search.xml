@@ -59,6 +59,31 @@
     </entry>
     
     
+    
+    <entry>
+      <title>对母校终端机的一次渗透</title>
+      <link href="/2017/06/17/%E5%AF%B9%E6%AF%8D%E6%A0%A1%E7%BB%88%E7%AB%AF%E6%9C%BA%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F/"/>
+      <url>/2017/06/17/%E5%AF%B9%E6%AF%8D%E6%A0%A1%E7%BB%88%E7%AB%AF%E6%9C%BA%E7%9A%84%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F/</url>
+      
+        <content type="html"><![CDATA[<h2 id="0x01-一点感悟"><a href="#0x01-一点感悟" class="headerlink" title="0x01 一点感悟"></a>0x01 一点感悟</h2><p>又回到最初的起点 记忆中你青涩的脸</p><p>我们终于 来到了这一天                   —胡夏《那些年》</p><p>当这首歌的旋律在我耳边响起，我的思绪仿佛一下间重返多年前。<br>有些情思，难以抓住，我已变成如今的自己。<br>纵使很多故人难以重逢，生活难以重返，但是我依然坚信踏实地走好现在的路便是最好的选择。<br>朋友们，好好珍惜现在处在一起的友情、爱情，这些青葱岁月的小幸运可能会成为人生中最美的一缕记忆。</p><p>趁着母校的学生还在上课，老师们没放假，我想回到母校走走，看看那些花儿、那些草木和那些日日夜夜陪伴我的老师。<br>伴着发动机的轰鸣声，我来到了母校。</p><h2 id="0x02-本性难移"><a href="#0x02-本性难移" class="headerlink" title="0x02:本性难移"></a>0x02:本性难移</h2><p>走在这片熟悉的土地上，抚摸大地的每一寸肌肤，嗅着花儿的芬芳，感受着蓝天白云，远山沧海之美，不由得有些心潮澎湃<br>看着操场上奔跑的少年，校园里卿卿我我的学生。<br>“依然是那般单纯且美好~”我感叹到。<br>看了下手表，马上就要到和老师约定的时间了，我便快马加鞭地走向老师的办公室<br>但是途中发现了这个好东西。。。。我这技术菜鸡的禽兽本性就暴露无遗了。。<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191407864.png" alt="image"></p><p>我去，学校现在真的是发达了，学校里都装上这种查询用的触屏终端机了。<br>我好奇地点开各个栏目。。浏览了一下学校的各种新闻（由于终端机屏幕亮，这些照片反光比较厉害）<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191407936.png" alt="image"></p><p>不得不为母校的日益辉煌感到高兴啊，终端机里的新闻都挺牛逼。<br>但是我点击左上方的LOGO时，惊奇的发现了这个<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191407512.png" alt="image"></p><p>没错404界面，说明我们应该进入了浏览器，那么我们思路可以骚一点，利用浏览器的审查元素来实现输入法工具栏的弹出<br>当我们在404界面手指长摁屏幕时，相当于使用鼠标右键<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191406618.png" alt="image-20230419132352843"></p><p>我们立马点开审查元素，找到一个可以输入字符的地方，召唤出我们亲爱的输入法<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191408853.png" alt="image"></p><p>搜狗输入法。。。可以很强势，点击搜狗输入法的工具栏，成功弹出Windows系统下方的工具栏<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191408786.png" alt="image"></p><p>然后利用搜狗的软键盘和下方的Windows工具栏，我们成功地打开cmd进行了一波信息搜集，这台终端机也宣布gg<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191410094.png" alt="image"></p><p>没错，就这样把这台终端机给拿下了，我带着满心欢喜，上楼去找班主任的办公室。</p><h2 id="0x03-唠嗑后的Getshell"><a href="#0x03-唠嗑后的Getshell" class="headerlink" title="0x03:唠嗑后的Getshell"></a>0x03:唠嗑后的Getshell</h2><p>来到班主任的办公室里，班主任非常亲切地招待了我一番，颇有一番活跃的气氛<br>过了一会，班主任说她要上课了，我决定等她下班后和她吃顿饭。于是她把我安排在她办公室的座位上跟我说<br>——“你在这里拿我的电脑看看网页吧，我上完课和你一块出去哈”</p><p>这一句话可算是高兴坏了我，这简直是引狼入室啊。。。于是我拿出U盘，开始对学校内网进行进一步的探测。</p><p>首先使用ScanPort对192段内网开放的WEB服务进行了扫描</p><p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191410608.png" alt="image"></p><p>我看了一下，有些是路由器的管理界面，尝试了一些弱口令爆破无果后便放弃了<br>但是我发现了学校的一个校内直播平台 192.168.88.128:80</p><p>2.打开直播平台后，发现每次直播的发起人的用户名均是admin….运气好炸<br>用户登录界面没有验证码，果断进行一波猛如虎的爆破。。（忘截图了）</p><p>成功登录后台，找到一个LOGO的上传点上传SHELL<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191410789.png" alt="image"></p><p>很明显。。。拦截掉了，但是目测肯定是用的前端认证。<br>直接在Burp的Http请求中修改shell.jpg为shell.php</p><p>如图所示<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191410915.png" alt="image"></p><p>成功拿到SHELL<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191410865.png" alt="image"></p><h2 id="0x04-蛋疼的提权"><a href="#0x04-蛋疼的提权" class="headerlink" title="0x04:蛋疼的提权"></a>0x04:蛋疼的提权</h2><p>whoami执行看了一下，权限比较小，没有c盘的写权限(所以shift后门还是算了)。<br>于是我上了一堆ms提权集试了下，发现补丁打的还算是及时，都没什么卵用。。。<br>后来翻了翻数据库配置文件，拿到了数据库的相关配置信息<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191411392.png" alt="image"></p><p>UDF提权试下<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191411538.png" alt="image"></p><p>OKOK，非常可以，直接上用户，使用默认3389端口登录服务器<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191411845.png" alt="image"></p><h2 id="0x05-收尾"><a href="#0x05-收尾" class="headerlink" title="0x05:收尾"></a>0x05:收尾</h2><p>拿到服务器后，我在网站根目录写了一个PHP的文件下载系统，然后在服务器上架设好远控，跑到楼下的终端机上下载了远控木马执行<br>这样操作就更加方便了。正当我准备进行进一步嗅探时，我看了看时间已经不早了。。老师马上要下课了。。</p><p>于是我使用工具清理了一下服务器日志，删除了shell，拿QQ音乐放上一首老男孩，静静地听着。<br>随后老师回来了，我们愉快的离开校园，我叫上一个基友一块到万达吃了顿饭，感觉还不错<br><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304191411549.png" alt="image"></p><h2 id="0x06-想法与总结"><a href="#0x06-想法与总结" class="headerlink" title="0x06:想法与总结"></a>0x06:想法与总结</h2><p>当我离开校园时，我静静地回首望向一座座教学楼——那是我梦想开始的地方。<br>时至今日我已不记得多少个无助的夜里面，我听着那首《老男孩》，然后在宿舍里开着手电筒背书，学技术<br>我也不需要记得。</p><p>下面说一下终端机的常用渗透测试技巧:</p><blockquote><p>1.在终端机输入内容时，注意是否出现语言栏，很多情况可以利用语言栏进行渗透<br>2.可以频繁点击屏幕，程序有可能崩溃掉（不要笑，这是真的）<br>3.利用长摁某一位置出现的右键菜单（比如本篇文章中浏览器中的审查元素）<br>4.如果可以接触到终端机的电源，可以电源，然后让终端机重启，往往会有意想不到的结果</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> blog </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 漏洞挖掘 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
   
   
 </search>
