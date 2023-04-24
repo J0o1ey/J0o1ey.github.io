@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>Mac M1 Ventura解决ProxyChains-ng无法正常使用</title>
+      <link href="/2023/04/24/Mac-M1-Ventura%E8%A7%A3%E5%86%B3ProxyChains-ng%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5/"/>
+      <url>/2023/04/24/Mac-M1-Ventura%E8%A7%A3%E5%86%B3ProxyChains-ng%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5/</url>
+      
+        <content type="html"><![CDATA[<h2 id="0x00-踩坑"><a href="#0x00-踩坑" class="headerlink" title="0x00 踩坑"></a>0x00 踩坑</h2><p>在Mac M1芯片Ventura系统中直接通过brew安装Proxychains-ng会因为Ventura系统Bug</p><p>导致libproxychains4.dylib文件无法正常加载</p><p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304242141369.png" alt="image-20230424214130990"></p><p>Github找issue和采用百度来的编译方法均无法解决，怀疑是系统层的Bug</p><p>经过折腾，成功找了解决方案，开个文章记录一下</p><h2 id="0x01-解决过程"><a href="#0x01-解决过程" class="headerlink" title="0x01 解决过程"></a>0x01 解决过程</h2><pre><code># 恢复模式关闭sipcsrutil disable# 打开arm64e支持sudo nvram boot-args=-arm64e_preview_abi随后重启Mac</code></pre><p>重启mac后</p><pre><code>git clone https://github.com/rofl0r/proxychains-ng cd proxychains-ng CFLAGS=&quot;-arch arm64e&quot; LDFLAGS=&quot;-arch arm64e&quot; ./configure --prefix=/usr/local --bindir=/usr/local/bin --libdir=/usr/local/lib --fat-binary-m1  //编译arm64e适用于M1芯片的软件包make</code></pre><p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304242145053.png" alt="image-20230424214510023"></p><p>如图</p><p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304242145249.png" alt="image-20230424214557223"></p><pre><code>proxychains4 curl https://www.youtube.com</code></pre><p><img src="https://j0o1ey-1251589192.cos.ap-beijing.myqcloud.com/202304242147877.png" alt="image-20230424214709855"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 安全工具 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/2023/04/19/hello-world/"/>
       <url>/2023/04/19/hello-world/</url>
